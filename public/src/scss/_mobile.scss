@@ -1,0 +1,257 @@
+body {
+	font-size: 1em;
+	// background: $dark;
+	background: transparent;
+	color: $light;
+	// margin-top: 5rem;
+	// height: 200vh;
+
+	// background-image: url('../img/background.jpeg');
+	// background-attachment: local;
+	// background-repeat: no-repeat;
+	// background-position: center;
+
+	// background-size: cover;
+}
+
+div {
+	// outline: 1px solid $light;
+}
+// .portfolio-item {
+// 	display: flex;
+// 	flex-direction: row;	
+// 	align-items: center;
+
+// 	.portfolio-item-list {
+// 		// background-image: url('../img/list-style.svg');
+// 		// background-repeat: no-repeat;
+// 		// background-position: center;
+// 		// background-size: cover;
+
+// 	}
+
+	// .portfolio-item-link {
+	// 	// background-image: url('../img/diamond.svg');
+	// 	// background-repeat: no-repeat;
+	// 	// background-position: center;
+	// 	// background-size: cover;
+	// 	transform: rotate(45deg);
+	// 	width: 25rem;
+	// 	height: 25rem;
+	// 	background: $dark;
+	// 	color: $light;
+	// 	display: flex;
+	// 	flex-direction: column;
+	// 	justify-content: center;
+	// 	align-items: center;
+	// 	& > * {
+	// 		transform: rotate(-45deg);
+	// 	}
+	// }
+
+	// hr {
+	// 	border: none;
+	// 	background-color: $dark;
+	// 	height: 0.3rem;
+	// }	
+// }
+/*
+.dark {
+	// background-color: $dark;
+	padding: 0;
+	width: 250px;
+	height: 250px;
+	position: relative;	
+	.mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+}
+.portfolio-item {
+
+		display: flex;
+		flex-direction: row;	
+		align-items: center;
+
+	.portfolio-item-list {
+		color: $light;
+	}
+	.portfolio-item-link {
+		padding: 0;
+		width: 250px;
+		height: 250px;
+		position: relative;
+		.mask {
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+	}
+}
+*/
+/* Grid */
+
+.landing {
+	background-color: rgba(99,99,99,0.3);
+	height: 100vh;
+	position: relative;
+	// top: 0;
+	// left: 0;
+	// float: left;
+
+	h1 {
+		margin-top: 14%;
+	}
+}
+.menu-toggle {
+	background-color: hotpink;
+	width: 40px;
+	height: 40px;
+	position: fixed;
+	margin-left: 2rem;
+}
+.scroll-arrow {
+	background-color: hotpink;
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	bottom: 0;
+}
+.side-menu {
+	float: left;
+	// display: none;
+	width: 250px;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.3);
+	position: fixed;
+	left: - 250px;
+	z-index: 1;
+
+}
+.clearfix {
+	clear: both;
+}
+
+.content {
+	// clear: both;
+	height: 40vh;
+	background-color: lightsteelblue;
+}
+
+.row, hr {
+	max-width: none !important;
+}
+
+
+#wrapper {
+	position: relative;
+	top: 0;
+	left: 0;
+	// padding: 0;
+}
+.about {
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+	img {
+		border-radius: 100%;
+
+	}
+}
+	
+.center-block {
+	display: block;
+	margin: 0 auto;
+}
+
+.skill {
+	width: 8rem;
+	height: 8rem;
+	border: 1rem solid green;
+	// background-color: green;
+	border-radius: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 700;
+	font-size: 1.5rem;
+}
+.portfolio {
+
+	.portfolio-item {
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.portfolio-item-listing {
+			// height: 100%;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.portfolio-item-link {
+
+			position: relative;
+
+			#close-info {
+				width: 25px;
+				height: 25px;
+				background-color: hotpink;
+				position: absolute;
+				top: 0;
+				right: 0;
+				display: none;
+				z-index: 2;
+			}
+			img {
+				width: 100%;
+			}
+
+			.project-link-text {
+				color: #202020;
+				display:flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				left: 0;
+			}
+			.project-info {
+				color: $dark;
+				display: none;
+				position: relative;
+			}
+		}
+	}
+}
+.hr {
+	img {
+		width: 100%;
+	}
+}
+.responsive-img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+.toggle-img {
+	padding: 0;
+	background-image: url('../img/portrait.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+// #parallax {
+// 	position: absolute;
+// 	width: 100%;
+// 	height: 100%;
+// }
