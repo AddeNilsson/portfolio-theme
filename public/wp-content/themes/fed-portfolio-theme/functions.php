@@ -27,6 +27,8 @@ function fed_portfolio_scripts() {
 	//Fed-Portfolio Custom Script
 	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/js/scripts.min.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
 
+	wp_localize_script('Fed-Portfolio-Script', 'ajaxCall', ['ajaxUrl' => get_template_directory_uri() . '/single.php']);
+
 
 }
 

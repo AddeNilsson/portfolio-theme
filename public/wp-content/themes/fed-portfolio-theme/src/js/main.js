@@ -21,7 +21,32 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 
 	jQuery(document).ready(function() {
 
-		jQuery('#foo').fadeOut(400);
+
+ 
+	        // jQuery.ajaxSetup({cache:false});
+
+	   //      jQuery(".portfolio-item-link").click(function(){
+
+	   //          var post_link = jQuery(this).attr("href");
+	 
+	   //          jQuery(".project-info").html("content loading");
+	   //          jQuery(".project-info").load(post_link);
+
+
+	   //          jQuery('.project-link-img', params.target.selector).addClass('toggle-img');
+
+				// jQuery.ajax({url: ajaxCall.ajaxUrl, success: function(result) {
+
+				// jQuery('.project-info', params.target.selector).html(result).fadeIn(700);	
+
+		  //       return false;
+
+		  //       });
+
+	        
+	 
+	    
+
 
 
 		jQuery('#menu-toggle').on('click', function() {
@@ -37,7 +62,12 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 
 
 		jQuery('.portfolio-item-link').on('click', function(e) {
+			e.preventDefault();
+			console.log(ajaxCall.ajaxUrl);
+			var value = jQuery(this).attr('rel');
+			jQuery.post(ajaxCall.ajaxUrl, {id: value});
 
+				console.log(jQuery(this).attr('rel'));
 
 			if( e.target.id != 'close-info' ) {
 
@@ -78,14 +108,15 @@ function menuToggle(state) {
 	expanded = state;
 }
 
-function myFunction(params) {
+function ajaxFetchSingle(params) {
 	console.log(params.target.selector);
+	console.log(ajaxCall.ajaxUrl)
 
 	// jQuery('.project-link-img img', params.target.selector).attr('src', 'img/mask-white.svg');
 
 	jQuery('.project-link-img', params.target.selector).addClass('toggle-img');
 
-	jQuery.ajax({url: 'single.php', success: function(result) {
+	jQuery.ajax({url: ajaxCall.ajaxUrl, success: function(result) {
 		jQuery('.project-info', params.target.selector).html(result).fadeIn(700);
 		// jQuery('#close-info').fadeIn();
 	}});
@@ -123,7 +154,7 @@ function initItemTimeLine(element) {
 	
 	tl.add(TweenLite.to(jQuery('img', element), 0.2, {opacity: 0}))
 
-	tl.add(TweenLite.to(element, 0.5, {backgroundColor: '#fff', onComplete: myFunction, onCompleteParams: ['{self}']}))
+	tl.add(TweenLite.to(element, 0.5, {backgroundColor: '#fff', onComplete: ajaxFetchSingle, onCompleteParams: ['{self}']}))
 
 	tl.play();
 }
@@ -185,7 +216,7 @@ tl.add(TweenLite.to(jQuery('.project-link-img', element), 0.5, {className: '-=sm
 tl.add(TweenLite.to(jQuery('.project-link-img', element), 0.5, {className: '+=small-5'}))
 
 tl.add(TweenLite.to(jQuery('img', element), 0.5, {border:'1px solid black', rotation: 90, className: '+=responsive-img'})) //, width: '50%'
-tl.add(TweenLite.to(element, 0.5, {backgroundColor: '#fff', onComplete: myFunction, onCompleteParams: ['{self}']}));
+tl.add(TweenLite.to(element, 0.5, {backgroundColor: '#fff', onComplete: ajaxFetchSingle, onCompleteParams: ['{self}']}));
 
 var tlOut = new TimelineLite({paused: true});
 
@@ -202,7 +233,7 @@ var tlOut = new TimelineLite({paused: true});
 	tl.add(TweenLite.to(jQuery('.project-link-img'), 1, {className: '+=small-5'}))
 
 	tl.add(TweenLite.to(jQuery('#item-toggle2 img'), 0.5, {border:'1px solid black', rotation: 90, className: '+=responsive-img'})) //, width: '50%'
-	tl.add(TweenLite.to(jQuery('#item-toggle2'), 0.5, {backgroundColor: '#fff', onComplete: myFunction, onCompleteParams: ['{self}']}));
+	tl.add(TweenLite.to(jQuery('#item-toggle2'), 0.5, {backgroundColor: '#fff', onComplete: ajaxFetchSingle, onCompleteParams: ['{self}']}));
 */
 
 
