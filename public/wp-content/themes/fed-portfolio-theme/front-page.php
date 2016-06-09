@@ -110,8 +110,40 @@ get_header() ?>
 					 ?>
 
 						<div class="row portfolio-item">
-
 							<div class="small-6 column portfolio-item-listing">
+								<img src="<?php echo get_template_directory_uri() ?>/img/listing-white.svg">
+							</div>
+							<div class="small-3 column portfolio-item-link">
+								<a class="custom-post-link" rel="<?php the_ID(); ?>" href="<?php the_permalink()?>">
+									<!-- <span id="close-info" class=""> --><i id="close-info" class="fa fa-times close-info"></i><!-- </span> -->
+									<div class="small-12 column project-link-img">
+										<img src="<?php echo get_template_directory_uri() ?>/img/diamond-white.svg" alt="White diamond shape">
+									</div>
+									<div class="project-link-text">
+										<h4><?php the_title() ?></h4>
+										<span>view project</span>
+									</div>
+								</a>
+								<div class="project-info text-center"></div>
+							</div>
+						</div>
+						<?php 
+						endwhile; 
+					else : ?>
+						<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+					<?php 
+					endif;
+					?>
+						
+					</div>
+				</div>
+			</div>
+
+<?php include 'footer.php' ?>
+
+<?php /*
+
+<div class="small-6 column portfolio-item-listing">
 								<img src="<?php echo get_template_directory_uri() ?>/img/listing-white.svg">
 							</div>
 
@@ -134,17 +166,4 @@ get_header() ?>
 								<div class="project-info"></div>
 
 							</div>
-						</div>
-						<?php 
-						endwhile; 
-					else : ?>
-						<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
-					<?php 
-					endif;
-					?>
-						
-					</div>
-				</div>
-			</div>
-
-<?php include 'footer.php' ?>
+							*/?>

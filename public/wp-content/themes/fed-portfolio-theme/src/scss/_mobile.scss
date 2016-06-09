@@ -153,15 +153,20 @@ a {
 
 			position: relative;
 
-			#close-info {
-				width: 25px;
-				height: 25px;
-				background-color: hotpink;
+			.close-info {
+				// width: 25px;
+				// height: 25px;
+				// background-color: hotpink;
+				color: $dark;
+				padding: 0.5rem;
 				position: absolute;
 				top: 0;
 				right: 0;
 				display: none;
 				z-index: 2;
+				&:hover {
+					color: initial;
+				}
 			}
 			img {
 				width: 100%;
@@ -182,7 +187,8 @@ a {
 			.project-info {
 				color: $dark;
 				display: none;
-				position: relative;
+				position: absolute;
+				top: 0;
 			}
 		}
 	}
