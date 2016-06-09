@@ -1,64 +1,91 @@
 body {
 	font-size: 1em;
-	background: $dark;
+	// background: $dark;
+	background-color: rgba(0,0,0,0.1);
 	// background: transparent;
 	color: $light;
 	// margin-top: 5rem;
-	// height: 200vh;
+	height: 400vh;
 
-	// background-image: url('../img/background.jpeg');
-	// background-attachment: local;
-	// background-repeat: no-repeat;
-	// background-position: center;
+	background-image: url('../img/bg-1080.jpeg');
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-position: center;
 
-	// background-size: cover;
+	background-size: cover;
 }
+a {
+	text-decoration: none;
+	color: inherit;
+	transition: font-size, 0.5s;
+}
+.fa {
+	font-size: 3rem;
+}
+
 /* Grid */
 
+.cc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .landing {
 	background-color: rgba(99,99,99,0.3);
-	height: 100vh;
+	height: 85vh;
 	position: relative;
 	margin-left: 0;
 	margin-right: 0;
 	// top: 0;
 	// left: 0;
 	// float: left;
+	.profile {
+		padding-top: 2rem;
 
-	h1 {
-		margin-top: 14%;
+		h1 {
+			margin-top: 5%;
+		}
+
+		.avatar { /* Wordpress added class for img */
+			@include avatar;
+			border: 0.5rem solid rgba(0,0,0,0.25);
+			box-sizing: border-box;
+		}
+
 	}
 }
 .menu-toggle {
-	background-color: hotpink;
-	width: 40px;
-	height: 40px;
 	position: fixed;
-	margin-left: 2rem;
+	padding: 0.9rem;
+	cursor: pointer;
+	// margin-left: 0.2rem;
 }
-.scroll-arrow {
-	background-color: hotpink;
-	width: 40px;
-	height: 40px;
-	position: absolute;
-	bottom: 0;
-}
+
+	
 .side-menu-cnt {
 	float: left;
-	// display: none;
 	width: 250px;
 	height: 100vh;
 	background-color: rgba(0,0,0,0.3);
 	position: fixed;
 	left: - 250px;
 	z-index: 1;
+	// padding-top: 10vh;
+	.menu-portrait {
+		padding: 10vh 0 10vh 0;
+	}
 
+	.avatar {
+		@include avatar;
+	}
 	ul {
 		margin: 0;
 		list-style-type: none;
 		text-align: center;
 	}
 }
+
+
 .clearfix {
 	clear: both;
 }
@@ -94,18 +121,18 @@ body {
 	margin: 0 auto;
 }
 
-.skill {
-	width: 8rem;
-	height: 8rem;
-	border: 1rem solid green;
-	// background-color: green;
-	border-radius: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-weight: 700;
-	font-size: 1.5rem;
-}
+// .skill {
+// 	width: 8rem;
+// 	height: 8rem;
+// 	border: 1rem solid green;
+// 	// background-color: green;
+// 	border-radius: 100%;
+// 	display: flex;
+// 	justify-content: center;
+// 	align-items: center;
+// 	font-weight: 700;
+// 	font-size: 1.5rem;
+// }
 .portfolio {
 
 	.portfolio-item {
@@ -161,6 +188,8 @@ body {
 	}
 }
 .hr {
+	padding-top: 1.5rem;
+	padding-bottom: 1.5rem;
 	img {
 		width: 100%;
 	}
@@ -176,4 +205,9 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
+}
+footer {
+	height: 3vh;
+	background-color: rgba(99,99,99,0.3);
+
 }

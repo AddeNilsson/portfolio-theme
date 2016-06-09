@@ -5,11 +5,14 @@ function fed_portfolio_scripts() {
 	//Normalize
 	wp_enqueue_style('normalize', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css');
 
+	//Font-awesome
+	wp_enqueue_style('font-awesome', "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css");
+
 	// Foundation CSS
 	wp_enqueue_style('foundation-css', 'https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.css');
 
 	// Theme stylesheet.
-	wp_enqueue_style( 'fed-portfolio-style', get_template_directory_uri() . '/css/style.css', ['foundation-css'] );
+	wp_enqueue_style( 'fed-portfolio-style', get_template_directory_uri() . '/css/style.css', ['foundation-css', 'font-awesome'] );
 
 /* Scripts */
 
@@ -23,6 +26,9 @@ function fed_portfolio_scripts() {
 
 	// Foundation
 	wp_enqueue_script('foundation-js', 'https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js', [], false, true);
+
+	//Chart.js
+	// wp_enqueue_script('chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js', [], false, true);
 
 	//Fed-Portfolio Custom Script
 	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/js/scripts.min.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
@@ -94,38 +100,54 @@ add_action( 'init', 'cpt_portfolio_init' );
 
 ## Meta ##
 
-add_action('add_meta_boxes', 'add_product_meta');
-function add_product_meta()
-{
+
+
+function add_portfolio_meta() {
     global $post;
 
-    if(!empty($post))
-    {
+    if(!empty($post)) {
         $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 
         if($pageTemplate == 'front-page.php' )
         {
             add_meta_box(
-                'product_meta', // $id
+                'portfolio_meta', // $id
                 'Portfolio Customization', // $title
                 'display_portfolio_customization', // $callback
-                'page', // $page
-                'normal', // $context
-                'high'); // $priority
+                'page',
+                'normal',
+                'high'
+                );
         }
     }
 }
 
-function display_portfolio_customization() {
+add_action('add_meta_boxes', 'add_portfolio_meta');
 
+function display_portfolio_customization() {
     get_template_part('templates/customization', 'fields');
 }
 
 function save_portfolio_customization($post_id, $post) {
-    $portfolio_meta['user_name'] = $_POST['user_name'];
-    $portfolio_meta['user_title'] = $_POST['user_title'];
 
-    //$portfolio_meta['user_portrait'] = $_POST['user_portrait'];
+    $portfolio_meta['user_name'] = sanitize_text_field($_POST['user_name']);
+    $portfolio_meta['user_title'] = sanitize_text_field($_POST['user_title']);
+
+    $portfolio_meta['user-about'] = sanitize_text_field($_POST['user-about']);
+
+    $portfolio_meta['skill-heading'] = sanitize_text_field($_POST['skill-heading']);
+
+    $portfolio_meta['skill-1'] = sanitize_text_field($_POST['skill-1']);
+    $portfolio_meta['master-1'] = sanitize_text_field($_POST['master-1']);
+
+    $portfolio_meta['skill-2'] = sanitize_text_field($_POST['skill-2']);
+    $portfolio_meta['master-2'] = sanitize_text_field($_POST['master-2']);
+
+    $portfolio_meta['skill-3'] = sanitize_text_field($_POST['skill-3']);
+    $portfolio_meta['master-3'] = sanitize_text_field($_POST['master-3']);
+
+    $portfolio_meta['skill-4'] = sanitize_text_field($_POST['skill-4']);
+    $portfolio_meta['master-4'] = sanitize_text_field($_POST['master-4']);
 
 
     foreach($portfolio_meta as $key => $value){
@@ -138,3 +160,37 @@ function save_portfolio_customization($post_id, $post) {
     }
 }
 add_action('save_post', 'save_portfolio_customization',1,2);
+
+### Default nav menu ###
+
+// Check if the menu exists
+$default_menu = 'FED portfolio menu';
+$default_menu_exists = wp_get_nav_menu_object( $default_menu );
+
+// Create if doesn't exists Logged in menu
+if( !$default_menu_exists){
+    $menu_id = wp_create_nav_menu($default_menu);
+
+    // Set up default menu items
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('Top'),
+        'menu-item-classes' => 'home',
+        'menu-item-url' => home_url( '/' ), 
+        'menu-item-status' => 'publish'));
+
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('About'),
+        'menu-item-url' => home_url( '#about-anchor' ), 
+        'menu-item-status' => 'publish'));
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('Portfolio'),
+        'menu-item-url' => home_url( '#portfolio-anchor' ), 
+        'menu-item-status' => 'publish'));
+
+/* Kanske blog sen..?    
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('Min Studieplan'),
+        'menu-item-url' => home_url( '/plan' ), 
+        'menu-item-status' => 'publish'));
+*/
+}

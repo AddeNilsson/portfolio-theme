@@ -11,6 +11,10 @@ var transformed = false;
 
 var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 
+// var tlScroll = new TimelineLite({paused: true, onComplete: scrollArrow});
+
+
+
 // Anonymous function for being able to write proper jQuery code within wordpress
 
 // (function($) {
@@ -32,7 +36,13 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 				jQuery('#wrapper').animate({left: 250}, 500);
 			}	
 		});
+		
 
+		jQuery('#user_portrait img').attr('width', '');
+		jQuery('#user_portrait img').attr('height', '');
+
+		jQuery('.demo').percentcircle();
+		
 
 		jQuery('.portfolio-item-link').on('click', function(e) {
 
@@ -69,7 +79,9 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 	});
 
 
+function scrollArrow() {
 
+}
 
 function menuToggle(state) {
 	expanded = state;
