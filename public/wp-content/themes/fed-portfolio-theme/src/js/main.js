@@ -43,7 +43,19 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 
 		jQuery('.demo').percentcircle();
 		
+		/* #####  */
 
+		jQuery('.custom-post-link').on('click', function(e) {
+			e.preventDefault();
+			
+			openCase(e.currentTarget.href);
+	​
+			return false;
+		});
+
+
+		/* #####  */
+/*
 		jQuery('.portfolio-item-link').on('click', function(e) {
 
 
@@ -75,9 +87,67 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 			// tl.clear();
 			// jQuery('.project-link-text').show();
 		});
-
+*/
 	});
 
+/* #####  */
+
+function openCase(_url) {
+	var url = _url;
+
+	if(typeof(_url) == 'object') {
+		url = _url[0];
+	}
+
+	jQuery.get(url, function(result) {
+		console.log(result)
+	});
+​/*
+	$('.case-page-big-slideshow').slideUp();
+	$('.case-container').slideUp();
+	$("#single-post-container").fadeIn();
+​
+	TweenMax.to(window, .5, {scrollTo: {y: 0}});
+​
+	$("#single-post-container .case-content").html("");
+​
+	$.get(url, function(result) {
+		$('#loaded-content').hide();
+		$('#loaded-content').html(result).fadeIn();
+​
+		var slider_selector = $('#loaded-content .slideshow div:first').attr('id');
+		currentSlider = new IdealImageSlider.Slider({
+			selector: '#'+slider_selector,
+			height: 600,
+			interval: 2000,
+			transitionDuration: 700,
+			effect: 'fade',
+			disableNav: false,
+			keyboardNav: true
+		});
+		currentSlider.start();
+​
+		var next = $('.case-text .next-case a').attr('href');
+		if(next == undefined) {
+			$("#next-case").hide();
+		} else {
+			$("#next-case").show();
+			$("#next-case").attr('href', next);
+		}
+​
+		var prev = $('.case-text .prev-case a').attr('href');
+		if(prev == undefined) {
+			$("#previous-case").hide();
+		} else {
+			$("#previous-case").show();
+			$("#previous-case").attr('href', prev);
+		}
+	});
+	*/
+}
+
+
+/* #####  */
 
 function scrollArrow() {
 
@@ -102,6 +172,7 @@ function ajaxFetchSingle(params) {
 
 }
 
+/* Prev ajax vers.
 function initItemTimeLine(element) {
 
 	tl.add(TweenLite.to(jQuery('img', element), 0.5, {rotation: 45}))
@@ -137,7 +208,7 @@ function initItemTimeLine(element) {
 
 	tl.play();
 }
-
+*/
 
 /* If closing shoul dbe in a seperate function: */
 function closeItem() {
