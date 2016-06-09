@@ -1,7 +1,7 @@
 <?php //while( have_posts() ) : the_post() ?>
 
 <?php/* $post = get_post($_POST['id']);
-print_r($post) ?>
+print_r($post) */?>
 
 	
 	<div class="small-7 column text-center">
@@ -10,10 +10,10 @@ print_r($post) ?>
 		<?php the_content() ?>
 	</div>
 
-<?php //endwhile */?>
+<?php //endwhile ?>
 
 
-<?php
+<?php /*
  	print_r($_POST);
     $post = get_post($_POST['id']);
  
@@ -29,3 +29,5 @@ print_r($post) ?>
     <?php endwhile;?> 
  
     </div>
+
+    */?>

@@ -1,9 +1,11 @@
-<h1>Index.php</h1>
 <?php
 /*
- get_header() ?>
+Template name: Landing-page
+*/
 
-			<div id="head" class="column row landing"> <!-- alt. column row -->
+get_header() ?>
+
+			<div id="head" class="column row landing"> <!-- alt. row -->
 				<div class="column">
 					<div class="row">
 						<div class="small-12">
@@ -13,13 +15,13 @@
 
 					<div class="row">
 						<div class="small-12 medium-6 column medium-centered">
-							<h1 class="text-center"><?php echo bloginfo('title') ?></h1>
+							<h1 class="text-center"><?php echo get_post_meta($post->ID, 'user_name', true) ?></h1>
 						</div>
 					</div>
 					
 					<div class="row">
 						<div class="small-12 medium-6 column medium-centered">
-							<h3 class="text-center">Front-End Developer</h3>
+							<h3 class="text-center"><?php echo get_post_meta($post->ID, 'user_title', true) ?></h3>
 						</div>
 					</div>
 
@@ -57,15 +59,15 @@
 				endif;	
 				?>
 			</div>
-*/?>
-<?php /*
+*/ ?>
 
 			<div class="row">
 				<div class="medium-8 column medium-centered portfolio">
 
-				<?php $portfolio = new WP_query(['post-type' => 'portfolio-item']);
+				<?php $portfolio = new WP_query(['post_type' => 'portfolio']);
 
 				 if( $portfolio->have_posts() ) : 
+
 				 	while( $portfolio->have_posts() ) : $portfolio->the_post();
 				 ?>
 
@@ -97,14 +99,14 @@
 					</div>
 					<?php 
 					endwhile; 
-					else : ?>
-						<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
-					<?php 
-					endif;
-					?>
+				else : ?>
+					<p><?php _e( 'Sorry, no posts matched your criteria.' ); ?></p>
+				<?php 
+				endif;
+				?>
 					
 
 				</div>
 			</div>
 
-<?php include 'footer.php' */?>
+<?php include 'footer.php' ?>
