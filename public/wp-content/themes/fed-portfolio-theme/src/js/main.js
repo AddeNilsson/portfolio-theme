@@ -65,10 +65,10 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 			}
 		});
 
+*/
+		jQuery('#close-info').on('click', function(e) {
 
-		jQuery('.close-info').on('click', function(e) {
-
-			jQuery('.close-info').fadeOut(200);
+			jQuery('#close-info').fadeOut(200);
 			jQuery('.project-info').fadeOut(400);
 
 			// TweenLite.to(jQuery('.portfolio-item-link'), 2, {opacity: '0.1', onComplete: closeItem});
@@ -80,7 +80,7 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 			// tl.clear();
 			// jQuery('.project-link-text').show();
 		});
-*/
+
 	});
 
 function initItemTimeline(element) {
@@ -91,8 +91,8 @@ function initItemTimeline(element) {
 	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= small-pull-3'}))
 	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {backgroundColor: '#fff'}))
 	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= large-6'}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .6, {backgroundColor: '#fff', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
-
+	tl.add(TweenLite.to(jQuery(element).parent(), .6, {backgroundColor: 'rgba(0,0,0,0.4)', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
+	/* Eller #fff på båda backgrounds ?*/
 	tl.play();
 }
 
@@ -116,11 +116,11 @@ function menuToggle(state) {
 	expanded = state;
 }
 
-/* If closing shoul dbe in a seperate function: */
 function closeItem() {
-		tl.pause(0, true); //Go back to the start (true is to suppress events)
-		tl.clear();
-		jQuery('.project-link-text').fadeIn(400);
+	tl.pause(0, true); //Go back to the start (true is to suppress events)
+	tl.clear();
+	jQuery('.project-link-text').fadeIn(400);
+	transformed = false;
 }
 
 
