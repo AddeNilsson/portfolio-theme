@@ -1,52 +1,84 @@
 'use strict';
-console.log('hello world');
 
 var expanded = false; //menu
+var skills = false; //Animates SKill charts
+var transformed = false; //portfolio single posts
+var itemsOnScreen = false; //portfolio item visibilty
+var scrollIndicator = true; //scroll down arrows animation
 
-// var element = '#item-toggle2';
+var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); // single portfolio items timeline
+var tlp = new TimelineLite({paused: true, onComplete: resetPortfolioTl}); //potfolio-items animation timeline
+var tls = new TimelineLite({onReverseComplete: initScrollTl}); //Scroll down indicator animation timeline
 
-var transformed = false;
-
-var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
+var controller = new ScrollMagic.Controller();
 
 // var tlScroll = new TimelineLite({paused: true, onComplete: scrollArrow});
 
-// Anonymous function for being able to write proper jQuery code within wordpress
-// (function($) {
-// 	// $ Works! You can test it with next line if you like
-// 	// console.log($);
-// })( jQuery );
+// TweenLite.defaultEase = Bounce.easeOut;
 
+jQuery(document).ready(function() {
 
-	jQuery(document).ready(function() {
+	initScrollTl();
 
-		jQuery('#menu-toggle').on('click', function() {
-			if( expanded ) {
-				jQuery("#slider").animate({left:-250},500, 'linear', menuToggle(false));
-				jQuery('#wrapper').animate({left: 0}, 500);
-			}
-			else {
-				jQuery("#slider").animate({left:0},500, 'linear', menuToggle(true));
-				jQuery('#wrapper').animate({left: 250}, 500);
-			}	
+	if( !skills ) {
+		var scene = new ScrollMagic.Scene({ triggerElement: '.about'}).on('start', function() {
+			animateSkills();
 		});
+
+		scene.addIndicators()
+		scene.addTo(controller);
+	}
+
+	if( !itemsOnScreen ) {
+		var portfolioScene = new ScrollMagic.Scene({triggerElement: '.portfolio'}).on('start', function() {
 		
-		jQuery('#user_portrait img').attr('width', '');
-		jQuery('#user_portrait img').attr('height', '');
+			initPortfolioTl();
+			// jQuery('.portfolio-item').animate({opacity: 1}, 800);
 
-		jQuery('.demo').percentcircle();
-
-		jQuery('.custom-post-link').on('click', function(e) {
-			e.preventDefault();
-
-			if( e.target.id != 'close-info' && transformed == false) {
-				jQuery('#close-info', this).fadeIn(300);
-
-				initItemTimeline(jQuery(this));
-
-				return false;
-			}
 		});
+
+		portfolioScene.addIndicators();
+		portfolioScene.addTo(controller);
+	}
+
+	var scrollDownScene = new ScrollMagic.Scene({triggerElement: '#scroll-down'}).on('start', function() {
+		stopScrollIndicator();
+	});
+
+	scrollDownScene.addIndicators();
+	scrollDownScene.addTo(controller);
+
+	jQuery('#menu-toggle').on('click', function() {
+		if( expanded ) {
+			jQuery("#slider").animate({left:-250},500, 'linear', menuToggle(false));
+			jQuery('#wrapper').animate({left: 0}, 500);
+		}
+		else {
+			jQuery("#slider").animate({left:0},500, 'linear', menuToggle(true));
+			jQuery('#wrapper').animate({left: 250}, 500);
+		}	
+	});
+	
+	jQuery('#user_portrait img').attr('width', '');
+	jQuery('#user_portrait img').attr('height', '');
+
+	jQuery('.custom-post-link').on('click', function(e) {
+		e.preventDefault();
+
+		if( e.target.id != 'close-info' && transformed == false) {
+			jQuery('.close-info', this).fadeIn(300);
+
+			initItemTl(jQuery(this));
+
+			return false;
+		}
+	});
+
+	jQuery('#repeat-skill-animation').on('click', function() {
+		jQuery('.demo').html('');
+		skills = false;
+		animateSkills();
+	});
 
 /* Old animations: 
 		jQuery('.portfolio-item-link').on('click', function(e) {
@@ -58,7 +90,7 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 
 				// jQuery(this).parent().find('.portfolio-item-listing').fadeOut(100);
 
-				initItemTimeLine('#' + e.currentTarget.id);
+				initItemTl('#' + e.currentTarget.id);
 				jQuery('.close-info', this).fadeIn();
 
 				// jQuery(this).unbind('click');
@@ -66,32 +98,18 @@ var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); //
 		});
 
 */
-		jQuery('#close-info').on('click', function(e) {
-
-			jQuery('#close-info').fadeOut(200);
-			jQuery('.project-info').fadeOut(400);
-
-			// TweenLite.to(jQuery('.portfolio-item-link'), 2, {opacity: '0.1', onComplete: closeItem});
-
-			tl.reverse();
-			// closeItem();
-
-			// tl.pause(0, true); //Go back to the start (true is to suppress events)
-			// tl.clear();
-			// jQuery('.project-link-text').show();
-		});
 
 	});
 
-function initItemTimeline(element) {
+function initItemTl(element) {
 	var scope = jQuery(element).parent(); /* Stores a scope to be sent to ajax call function */
 
 	tl.add(TweenLite.to(jQuery('.project-link-text', element), .5, {display: 'none'}))
-	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {rotation: 45}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= small-pull-3'}))
-	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {backgroundColor: '#fff'}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= large-6'}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .6, {backgroundColor: 'rgba(0,0,0,0.4)', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
+	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {rotation: 45, ease: Bounce.easeOut}))
+	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= small-pull-3', ease: 'Power2.easeOut'}))
+	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {backgroundColor: '#fff', ease: 'Power2.easeOut'}))
+	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= large-6', ease: 'Power2.easeOut'}))
+	tl.add(TweenLite.to(jQuery(element).parent(), .6, {backgroundColor: 'rgba(0,0,0,0.4)', ease: 'Power2.easeOut', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
 	/* Eller #fff på båda backgrounds ?*/
 	tl.play();
 }
@@ -104,12 +122,22 @@ function openProject(_url, scope) {
 	}
 
 	jQuery.get(url, function(result) {
-		// console.log(result)
 		jQuery('.project-info', scope).html(result);
 		jQuery('.project-info', scope).fadeIn(300);
 		transformed = true;
-
+		enableCloseInfo();
 	});
+}
+
+function enableCloseInfo() {
+	jQuery('.close-info').on('click', function(e) {
+			jQuery('.close-info').fadeOut(200);
+			jQuery('.project-info').fadeOut(400);
+			tl.reverse();
+		})
+}
+function disableCloseInfo() {
+	jQuery('.close-info').unbind('click');
 }
 
 function menuToggle(state) {
@@ -117,27 +145,75 @@ function menuToggle(state) {
 }
 
 function closeItem() {
+	disableCloseInfo();
 	tl.pause(0, true); //Go back to the start (true is to suppress events)
 	tl.clear();
 	jQuery('.project-link-text').fadeIn(400);
 	transformed = false;
 }
 
+function animateSkills() {
+	if( !skills ) {
+		jQuery('.demo').percentcircle();
+		skills = true;
+	}
+}
+
+function initPortfolioTl() {
+	if( !itemsOnScreen ) {
+		tlp.add(TweenLite.to(jQuery('.portfolio-item'), .1, {float: 'none'}))
+		tlp.add(TweenLite.to(jQuery('.portfolio-item'), 1, {ease: 'Power3.easeOut', left: 0}))
+
+		tlp.play();
+		itemsOnScreen = true;
+	}
+	else {
+		// tlp.reverse();
+		tlp.add(TweenLite.to(jQuery('.portfolio-item'), .5, {ease: 'Power2.easeIn', left: -5000}))
+		tlp.add(TweenLite.to(jQuery('.portfolio-item'), .1, {float: 'left'}))
+
+		tlp.play();
+
+		itemsOnScreen = false;
+	}
+		
+}
+
+function resetPortfolioTl() {
+	tl.pause(0); //Go back to the start (true is to suppress events)
+	tlp.clear();
+}
+function initScrollTl() {
+	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: 35}))
+	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: 0}))
+	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: -35}))
+	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: 0}))
+	tls.reverse();
+}
+function stopScrollIndicator() {
+	tls.pause(0); //Go back to the start (true is to suppress events)
+	tls.clear();
+}
 
 
+/*Anonymous function for being able to write proper jQuery code within wordpress
+
+(function($) {
+	// $ Works! You can test it with next line if you like
+	// console.log($);
+})( jQuery );
+*/
 
 
-
-
-
-/* Scroll Magic test 
+/* First Scroll Magic test  
 	var controller = new ScrollMagic.Controller();
+
 	var fooTween = new TweenLite.to(jQuery('body'), 2, {backgroundColor: 'rgba(255,0,0,0.5)'})
 
 	var scene = new ScrollMagic.Scene({ triggerElement: '.about'});
 
-	scene.setTween(fooTween)
-	scene.setPin('#me')
+	scene.setTween(skills)
+	// scene.setPin('#me')
 	scene.addIndicators()
 	scene.addTo(controller);
 */
@@ -174,7 +250,7 @@ function ajaxFetchSingle(params, _url) {
 }
 */
 /* Prev ajax vers. 
-function initItemTimeLine(element, _url) {
+function initItemTl(element, _url) {
 	console.log(element, _url);
 
 	tl.add(TweenLite.to(jQuery('img', element), 0.5, {rotation: 45}))
@@ -217,7 +293,7 @@ function initItemTimeLine(element, _url) {
 	jQuery('#item-2').on('click', function(e) {
 
 		if( e.target.id != 'close-info' ) {
-			initItemTimeLine('#item-2');
+			initItemTl('#item-2');
 
 			jQuery('.project-link-text', this).fadeOut(300);
 			// jQuery(this).unbind('click');

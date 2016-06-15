@@ -23,9 +23,18 @@ function fed_portfolio_scripts() {
 	wp_enqueue_script('tweenLite', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js', array(), false, true);
 	wp_enqueue_script('CSSPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/plugins/CSSPlugin.min.js', [], false, true);
 	wp_enqueue_script('TimelineLite', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TimelineLite.min.js', [], false, true);
+	wp_enqueue_script('EasePackPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/easing/EasePack.min.js', [], false, true);
+
+
+
 
 	// Foundation
 	wp_enqueue_script('foundation-js', 'https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js', [], false, true);
+
+	//Scroll Magic
+	wp_enqueue_script('scroll-magic', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/ScrollMagic.js', [], false, true);
+	// wp_enqueue_script('scroll-magic-animation-plug-in', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/animation.gsap.js', [], false, true);
+	wp_enqueue_script('scroll-magic-debug-plug-in', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
 
 	//Chart.js
 	// wp_enqueue_script('chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js', [], false, true);
@@ -100,10 +109,7 @@ function cpt_portfolio_init() {
  
 add_action( 'init', 'cpt_portfolio_init' );
 
-
 ## Meta ##
-
-
 
 function add_portfolio_meta() {
     global $post;
@@ -197,3 +203,15 @@ if( !$default_menu_exists){
         'menu-item-status' => 'publish'));
 */
 }
+
+function add_contact_methods($profile_fields) {
+    // Add new fields
+    $profile_fields['github'] = 'Github';
+    $profile_fields['twitter'] = 'Twitter Username';
+    $profile_fields['facebook'] = 'Facebook URL';
+    $profile_fields['phone'] = 'Phonenumber';
+
+    return $profile_fields;
+}
+
+add_filter('user_contactmethods', 'add_contact_methods');

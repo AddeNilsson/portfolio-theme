@@ -11,7 +11,7 @@
 
 	<body>
 		<header id="slider" class="row side-menu-cnt">
-		
+
 			<div class="small-12 column">
 				<div class="row">
 					<div id="user-menu-portrait" class="small-6 medium-4 large-10 column small-centered menu-portrait">
@@ -29,7 +29,29 @@
 						?>
 					</div>
 				</div>
+
+				<div class="row text-center contact-field">
+					<?php 
+					$user_id = get_user_by('email', get_bloginfo('admin_email'))->ID;
+					$user_data = get_userdata($user_id);
+					?>
+					
+					<div class="small-3 column ">
+						<a href="<?php echo $user_data->github?>"><i class="fa fa-github"></i></a>
+					</div>
+					<div class="small-3 column">
+						<a href="<?php echo $user_data->facebook?>"><i class="fa fa-facebook-square"></i></a>
+					</div>
+					<div class="small-3 column">
+						<a href="<?php echo $user_data->twitter?>"><i class="fa fa-twitter-square"></i></a>
+					</div>
+					<div class="small-3 column">
+						<a href="mailto:<?php echo get_bloginfo('admin_email')?>"><i class="fa fa-envelope"></i></a>
+					</div>
+
+				</div>
 			</div>
+
 		</header>
 
 		<div id="wrapper" class="row">

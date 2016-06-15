@@ -6,7 +6,7 @@
 			var defaults = {
 			        animate : true,
 					diameter : 150,
-					guage: 15,
+					guage: 20,
 					coverBg: '#fff',
 					bgColor: '#000',
 					fillColor: 'green',
@@ -45,12 +45,12 @@
 					    'vertical-align': 'middle',
 					    'font-size': defaults.percentSize,
 					    'font-weight': defaults.percentWeight,
-					    'color': defaults.fillColor
+					    'color': '#202020'
                     }
 				};
 			
 			var that = this,
-					template = '<div class="center-block"><div class="ab"><div class="cir cc"><span class="perc">{{percentage}}</span></div></div></div>',					
+					template = '<div class="center-block"><div class="ab" style="opacity: 0.8;"><div class="cir cc"><span class="perc">{{percentage}}</span></div></div></div>',					
 					options =  $.extend(defaults, options)					
 
 			function init(){

@@ -87,6 +87,11 @@ get_header() ?>
 									<div class="demo" data-percent="<?php echo get_post_meta($post->ID, 'master-4', true) ?>"></div>
 								</div>
 							</div>
+							<div class="row">
+								<div class="large-3 column">
+									<span>Repeat animation <i id="repeat-skill-animation" class="fa fa-repeat"></i></span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -101,7 +106,7 @@ get_header() ?>
 			<div class="small-12 column">
 				<div class="row">
 					<div class="medium-8 column medium-centered portfolio">
-
+					<h1>Portfolio</h1>
 					<?php $portfolio = new WP_query(['post_type' => 'portfolio']);
 
 					 if( $portfolio->have_posts() ) : 
@@ -140,30 +145,3 @@ get_header() ?>
 			</div>
 
 <?php include 'footer.php' ?>
-
-<?php /*
-
-<div class="small-6 column portfolio-item-listing">
-								<img src="<?php echo get_template_directory_uri() ?>/img/listing-white.svg">
-							</div>
-
-							<div id="item-2" class="small-3 column portfolio-item-link">
-
-								<div id="close-info" class="close-info"></div>
-
-
-								<div class="small-12 column project-link-img">
-									<img src="<?php echo get_template_directory_uri() ?>/img/diamond-white.svg" alt="White diamond shape">
-								</div>
-
-								<div class="project-link-text">
-
-									<h4><a class="custom-post-link" rel="<?php the_ID(); ?>" href="<?php the_permalink()?>"><?php the_title() ?></a></h4>
-
-									<span>view project</span>
-								</div>
-
-								<div class="project-info"></div>
-
-							</div>
-							*/?>

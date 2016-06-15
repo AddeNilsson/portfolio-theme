@@ -71,6 +71,7 @@ a {
 	left: - 250px;
 	z-index: 1;
 	// padding-top: 10vh;
+
 	.menu-portrait {
 		padding: 10vh 0 10vh 0;
 	}
@@ -82,6 +83,9 @@ a {
 		margin: 0;
 		list-style-type: none;
 		text-align: center;
+	}
+	.fa {
+		font-size: 2.3rem;
 	}
 }
 
@@ -136,10 +140,14 @@ a {
 .portfolio {
 
 	.portfolio-item {
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		// opacity: 0;
+		// display:none;
+		float: left;
+		position: relative;
+		left: -5000px;
 
 		.portfolio-item-listing {
 			// height: 100%;
@@ -216,4 +224,12 @@ footer {
 	height: 3vh;
 	background-color: rgba(99,99,99,0.3);
 
+}
+.portfolio-post {
+	@include cc;
+	padding-top: 1rem;
+	flex-direction: column;
+}
+#repeat-skill-animation {
+	font-size: 1.5rem;
 }

@@ -11,3 +11,8 @@ $light: #fafafa;
 			// box-sizing: border-box;
 		
 }
+@mixin cc {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
