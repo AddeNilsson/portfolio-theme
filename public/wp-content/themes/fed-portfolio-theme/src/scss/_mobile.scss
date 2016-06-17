@@ -1,11 +1,8 @@
 body {
 	font-size: 1em;
-	// background: $dark;
 	background-color: rgba(0,0,0,0.1);
 	// background: transparent;
 	color: $light;
-	// margin-top: 5rem;
-	height: 400vh;
 
 	background-image: url('../img/bg-1080.jpeg');
 	background-attachment: fixed;
@@ -13,6 +10,9 @@ body {
 	background-position: center;
 
 	background-size: cover;
+}
+html, body {
+	overflow-x: hidden;
 }
 .row {
 	max-width: 100%;
@@ -35,7 +35,8 @@ a {
 }
 .landing {
 	background-color: rgba(99,99,99,0.3);
-	height: 85vh;
+	// width: 100%;
+	height: 100vh;
 	position: relative;
 	// margin-left: 0;
 	// margin-right: 0;
@@ -82,7 +83,6 @@ a {
 	.menu-portrait {
 		padding: 10vh 0 10vh 0;
 	}
-
 	.avatar {
 		@include avatar;
 	}
@@ -90,9 +90,16 @@ a {
 		margin: 0;
 		list-style-type: none;
 		text-align: center;
+		a {
+			font-size: 1.5rem;
+		}
 	}
 	.fa {
 		font-size: 2.3rem;
+	}
+	.contact-field {
+		position: absolute;
+		bottom: 2%;
 	}
 }
 

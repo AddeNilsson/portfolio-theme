@@ -14,7 +14,7 @@
 
 			<div class="small-12 column">
 				<div class="row">
-					<div id="user-menu-portrait" class="small-6 medium-4 large-10 column small-centered menu-portrait">
+					<div id="user-menu-portrait" class="small-6 medium-8 large-10 column small-centered menu-portrait">
 						<?php 
 						   echo get_avatar( get_bloginfo('admin_email'), $size = '512' ); 
 						?>

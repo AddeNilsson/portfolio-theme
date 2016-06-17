@@ -1,4 +1,9 @@
 <?php 
+
+/* Disable the Admin Bar. */
+show_admin_bar(false);
+
+
 function fed_portfolio_scripts() {
 /* Stylez */
 

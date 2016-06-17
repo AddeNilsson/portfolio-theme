@@ -20,19 +20,19 @@ var controller = new ScrollMagic.Controller();
 jQuery(document).ready(function() {
 
 	initScrollTl();
-	
+
 	var scrollDownScene = new ScrollMagic.Scene({triggerElement: '#about-anchor'}).on('start', function() {
 			stopScrollIndicator();
 		});
 
-		scrollDownScene.addIndicators();
+		// scrollDownScene.addIndicators();
 		scrollDownScene.addTo(controller);
 
 	if( !skills ) {
 		var scene = new ScrollMagic.Scene({ triggerElement: '.about h2'}).on('start', function() {
 			animateSkills();
 		});
-		scene.addIndicators()
+		// scene.addIndicators();
 		scene.addTo(controller);
 	}
 
@@ -41,19 +41,12 @@ jQuery(document).ready(function() {
 			initPortfolioTl();
 
 		});
-		portfolioScene.addIndicators();
+		// portfolioScene.addIndicators();
 		portfolioScene.addTo(controller);
 	}
 
 	jQuery('#menu-toggle').on('click', function() {
-		if( expanded ) {
-			jQuery("#slider").animate({left:-250},500, 'linear', menuToggle(false));
-			jQuery('#wrapper').animate({left: 0}, 500);
-		}
-		else {
-			jQuery("#slider").animate({left:0},500, 'linear', menuToggle(true));
-			jQuery('#wrapper').animate({left: 250}, 500);
-		}	
+		animateMenu();	
 	});
 	
 	jQuery('#user_portrait img').attr('width', '');
@@ -110,16 +103,29 @@ function openProject(_url, scope) {
 
 function enableCloseInfo() {
 	jQuery('.close-info').on('click', function(e) {
-			jQuery('.close-info').fadeOut(200);
-			jQuery('.project-info').fadeOut(400);
-			tl.reverse();
-		})
+		jQuery('.close-info').fadeOut(200);
+		jQuery('.project-info').fadeOut(400);
+		tl.reverse();
+	});
 }
 
 function disableCloseInfo() {
 	jQuery('.close-info').unbind('click');
 }
 
+function animateMenu() {
+	if( !expanded ) {
+		TweenLite.to(jQuery('#slider'), .8, {left: 0, ease: Power1.easeOut, onComplete: menuToggle, onCompleteParams: [true]});
+		TweenLite.to(jQuery('#wrapper'), .8, {left: 250, ease: Power1.easeOut});
+	}
+	else if( expanded ) {
+		TweenLite.to(jQuery('#slider'), .3, {left: -250, ease: Power1.easeOut, onComplete: menuToggle, onCompleteParams: [false]});
+		TweenLite.to(jQuery('#wrapper'), .3, {left: 0, ease: Power1.easeOut});
+	}
+	else {
+		return false;
+	}
+}
 function menuToggle(state) {
 	expanded = state;
 }

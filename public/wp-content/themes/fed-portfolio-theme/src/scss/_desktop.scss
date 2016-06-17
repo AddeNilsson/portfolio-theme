@@ -1,15 +1,24 @@
 a:hover {
-	font-size: 1.2rem;
 	color: inherit;
 }
 .side-menu-cnt {
-	a {
-		font-size: 1.5rem;
+	ul {
+		a {
+			font-size: 1.9rem;
+		}
+		a:hover {
+			font-size: 2.2rem;
+			// color: inherit;
+			// text-decoration: underline;
+			border-bottom: 1px solid white;
+		}
 	}
-	a:hover {
-		font-size: 1.8rem;
-		// color: inherit;
-		// text-decoration: underline;
+	.contact-field {
+		bottom: 5%;
+
+		a:hover {
+			color: rgba(100, 100, 100, 1);
+		}
 	}
 }
 

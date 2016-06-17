@@ -41,8 +41,8 @@ get_header() ?>
 					</div>
 				</div>
 
-				<div id="about-anchor" class="row show-for-medium">
-					<div class="small-12 column hr">
+				<div id="about-anchor" class="row">
+					<div class="small-12 column show-for-medium hr">
 						<img src="<?php echo get_template_directory_uri()?>/img/hr-white.svg" alt="horizontal line">
 					</div>
 				</div>
@@ -92,8 +92,8 @@ get_header() ?>
 					</div>
 				</div>
 
-				<div id="portfolio-anchor" class="row show-for-medium">
-					<div class="small-12 column hr">
+				<div id="portfolio-anchor" class="row">
+					<div class="small-12 column show-for-medium hr">
 						<img src="<?php echo get_template_directory_uri()?>/img/hr-white.svg" alt="horizontal line">
 					</div>
 				</div>
