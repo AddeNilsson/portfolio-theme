@@ -27,8 +27,52 @@ a:hover {
 		-webkit-filter: grayscale(10%) brightness(0.88); /* Chrome 19+ & Safari 6+ */
 		border-color: rgba(0,0,0,0.5);
 	}
+	#scroll-down {
+		margin-top: 20vh;
+	}
 }
 
+.portfolio {
+	.portfolio-item {
+		.portfolio-item-link {
+			.project-link-text {
+				h4 {
+					font-size: 1.56rem;
+				}
+			}
 
+			.project-info {
+
+				.portfolio-post {
+					padding: 5%;
+
+					.row:last-child {
+						display: flex;
+					}
+
+					.tech {
+						align-self: flex-end;
+						text-align: right;
+					}
+
+				}
+
+				// .portfolio-post-medium {
+				// 	padding: 5%;
+
+				// 	.row:last-child {
+				// 		display: flex;
+				// 	}
+
+				// 	.tech {
+				// 		align-self: flex-end;
+				// 		text-align: right;
+				// 	}
+
+				// }
+			}
+		}
+	}
+}
 
 	

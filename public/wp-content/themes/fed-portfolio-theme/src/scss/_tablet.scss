@@ -1,3 +1,29 @@
 .menu-toggle {
 	// margin-left: 2rem;
+	padding: 0.9rem;
+	
+}
+
+.portfolio {
+	.portfolio-item {
+		.portfolio-item-link {
+			.project-link-text {
+				h4 {
+					font-size: 2rem;
+				}
+			}
+
+			.project-info {
+
+				.portfolio-post {
+					color: $light;
+					padding: 10% 5%;
+
+					p:first-child {
+						margin-top: 1.5rem
+					}
+				}
+			}
+		}
+	}
 }

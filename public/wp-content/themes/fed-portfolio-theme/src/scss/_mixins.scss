@@ -1,6 +1,8 @@
 $dark: #202020;
 $light: #fafafa;
 
+$lightOpac: rgba(255, 255, 255, 0.7);
+
 @mixin avatar {
 			max-width: 100%;
 			height: auto;

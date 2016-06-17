@@ -14,13 +14,16 @@ body {
 
 	background-size: cover;
 }
+.row {
+	max-width: 100%;
+}
 a {
 	text-decoration: none;
 	color: inherit;
 	transition: font-size, 0.5s;
 }
 .fa {
-	font-size: 3rem;
+	// font-size: 3rem;
 }
 
 /* Grid */
@@ -34,8 +37,8 @@ a {
 	background-color: rgba(99,99,99,0.3);
 	height: 85vh;
 	position: relative;
-	margin-left: 0;
-	margin-right: 0;
+	// margin-left: 0;
+	// margin-right: 0;
 	// top: 0;
 	// left: 0;
 	// float: left;
@@ -51,13 +54,17 @@ a {
 			border: 0.5rem solid rgba(0,0,0,0.25);
 			box-sizing: border-box;
 		}
-
+	}
+	#scroll-down {
+		margin-top: 10vh;
 	}
 }
 .menu-toggle {
 	position: fixed;
-	padding: 0.9rem;
+	// padding: 0.9rem;
 	cursor: pointer;
+	color: $light;
+	font-size: 3rem;
 	// margin-left: 0.2rem;
 }
 
@@ -100,7 +107,7 @@ a {
 	background-color: lightsteelblue;
 }
 
-.row, hr {
+.row hr {
 	max-width: none !important;
 }
 
@@ -117,6 +124,10 @@ a {
 	img {
 		border-radius: 100%;
 
+	}
+	.repeat {
+		padding-top: 2rem;
+		cursor: pointer;
 	}
 }
 	
@@ -149,6 +160,9 @@ a {
 		position: relative;
 		left: -5000px;
 
+		// margin-top: 1rem;
+		// margin-bottom: 1rem;
+
 		.portfolio-item-listing {
 			// height: 100%;
 
@@ -160,16 +174,22 @@ a {
 		.portfolio-item-link {
 
 			position: relative;
+			// padding: 0;
 
+			.loading {
+				display: none;
+				padding-top: 1rem;
+				color: $lightOpac;
+				// background-color: rgba(0, 0, 0, 0.6);
+				
+			}
 			.close-info {
-				// width: 25px;
-				// height: 25px;
-				// background-color: hotpink;
-				color: $dark;
+				color: $lightOpac;
 				padding: 0.5rem;
+				font-size: 3rem;
 				position: absolute;
 				top: 0;
-				right: 0;
+				right: 2%;
 				display: none;
 				z-index: 2;
 				&:hover {
@@ -191,12 +211,42 @@ a {
 				width: 100%;
 				height: 100%;
 				left: 0;
+
+				h4 {
+					font-size: 1.4rem;
+				}
 			}
 			.project-info {
 				color: $dark;
 				display: none;
 				position: absolute;
 				top: 0;
+
+				// .portfolio-post-small {
+				// 	min-height: 50vh;
+				// 	@include cc;
+				// 	flex-direction: column;
+				// 	// padding: 10% 5%;
+				// 	color: $light;
+
+				// }
+				.portfolio-post {
+					min-height: 50vh;
+					@include cc;
+					flex-direction: column;
+					// padding: 10% 5%;
+					color: $light;
+				}
+
+				// .portfolio-post-medium {
+				// 	color: $light;
+				// 	padding: 10% 5%;
+
+				// 	p:first-child {
+				// 		margin-top: 1.5rem
+				// 	}
+
+				// }
 			}
 		}
 	}
@@ -225,11 +275,7 @@ footer {
 	background-color: rgba(99,99,99,0.3);
 
 }
-.portfolio-post {
-	@include cc;
-	padding-top: 1rem;
-	flex-direction: column;
-}
-#repeat-skill-animation {
-	font-size: 1.5rem;
-}
+
+// #repeat-skill-animation {
+// 	font-size: 1.5rem;
+// }

@@ -99,47 +99,44 @@ var transformed = false; //portfolio single posts
 var itemsOnScreen = false; //portfolio item visibilty
 var scrollIndicator = true; //scroll down arrows animation
 
+var loading; //Holds loading tween
+
 var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); // single portfolio items timeline
 var tlp = new TimelineLite({paused: true, onComplete: resetPortfolioTl}); //potfolio-items animation timeline
-var tls = new TimelineLite({onReverseComplete: initScrollTl}); //Scroll down indicator animation timeline
+var tls = new TimelineLite({onComplete: function() {
+	this.restart();
+}});
+
 
 var controller = new ScrollMagic.Controller();
-
-// var tlScroll = new TimelineLite({paused: true, onComplete: scrollArrow});
-
-// TweenLite.defaultEase = Bounce.easeOut;
 
 jQuery(document).ready(function() {
 
 	initScrollTl();
-
-	if( !skills ) {
-		var scene = new ScrollMagic.Scene({ triggerElement: '.about'}).on('start', function() {
-			animateSkills();
+	
+	var scrollDownScene = new ScrollMagic.Scene({triggerElement: '#about-anchor'}).on('start', function() {
+			stopScrollIndicator();
 		});
 
+		scrollDownScene.addIndicators();
+		scrollDownScene.addTo(controller);
+
+	if( !skills ) {
+		var scene = new ScrollMagic.Scene({ triggerElement: '.about h2'}).on('start', function() {
+			animateSkills();
+		});
 		scene.addIndicators()
 		scene.addTo(controller);
 	}
 
 	if( !itemsOnScreen ) {
 		var portfolioScene = new ScrollMagic.Scene({triggerElement: '.portfolio'}).on('start', function() {
-		
 			initPortfolioTl();
-			// jQuery('.portfolio-item').animate({opacity: 1}, 800);
 
 		});
-
 		portfolioScene.addIndicators();
 		portfolioScene.addTo(controller);
 	}
-
-	var scrollDownScene = new ScrollMagic.Scene({triggerElement: '#scroll-down'}).on('start', function() {
-		stopScrollIndicator();
-	});
-
-	scrollDownScene.addIndicators();
-	scrollDownScene.addTo(controller);
 
 	jQuery('#menu-toggle').on('click', function() {
 		if( expanded ) {
@@ -160,9 +157,7 @@ jQuery(document).ready(function() {
 
 		if( e.target.id != 'close-info' && transformed == false) {
 			jQuery('.close-info', this).fadeIn(300);
-
 			initItemTl(jQuery(this));
-
 			return false;
 		}
 	});
@@ -172,42 +167,25 @@ jQuery(document).ready(function() {
 		skills = false;
 		animateSkills();
 	});
-
-/* Old animations: 
-		jQuery('.portfolio-item-link').on('click', function(e) {
-
-
-			if( e.target.id != 'close-info' ) {
-
-				jQuery('.project-link-text', this).fadeOut(300);
-
-				// jQuery(this).parent().find('.portfolio-item-listing').fadeOut(100);
-
-				initItemTl('#' + e.currentTarget.id);
-				jQuery('.close-info', this).fadeIn();
-
-				// jQuery(this).unbind('click');
-			}
-		});
-
-*/
-
-	});
+});
 
 function initItemTl(element) {
-	var scope = jQuery(element).parent(); /* Stores a scope to be sent to ajax call function */
+	var scope = jQuery(element).parent(); /* Stores a scope to be used as context */
 
-	tl.add(TweenLite.to(jQuery('.project-link-text', element), .5, {display: 'none'}))
-	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {rotation: 45, ease: Bounce.easeOut}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= small-pull-3', ease: 'Power2.easeOut'}))
-	tl.add(TweenLite.to(jQuery('.project-link-img',element), .4, {backgroundColor: '#fff', ease: 'Power2.easeOut'}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .4, {className: '+= large-6', ease: 'Power2.easeOut'}))
-	tl.add(TweenLite.to(jQuery(element).parent(), .6, {backgroundColor: 'rgba(0,0,0,0.4)', ease: 'Power2.easeOut', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
-	/* Eller #fff på båda backgrounds ?*/
+	tl.add(TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), 1, {opacity: 0, width: '0px' })) // .7
+	tl.add(TweenLite.to(jQuery('.project-link-text', element), .3, {opacity: 0, display: 'none'})) //.5
+	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .7, {rotation: 45, ease: Bounce.easeOut})) //.4
+	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .5, {opacity: 0, ease: 'Power2.easeOut'})) //.4. display: none, ger en rörig animation men vore bra...
+	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .1, {width: 'initial'}))
+	tl.add(TweenLite.to(jQuery('.project-link-img', element), 1, {backgroundColor: 'rgba(0,0,0,0.6)', minHeight: '60vh', ease: 'Power2.easeOut'})) // .1
+	tl.add(TweenLite.to(jQuery('.portfolio-item', jQuery(scope).parent()), .1, {border: '2px solid red', ease: 'Power2.easeOut', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]})) //.7
+	tl.add(TweenLite.to(jQuery(element).parent(), 1.1, {className: '+= large-12', ease: 'Power2.easeOut'})) //.7
 	tl.play();
 }
 
 function openProject(_url, scope) {
+
+	inProgress(scope, true);
 	var url = _url;
 
 	if(typeof(_url) == 'object') {
@@ -215,7 +193,8 @@ function openProject(_url, scope) {
 	}
 
 	jQuery.get(url, function(result) {
-		jQuery('.project-info', scope).html(result);
+		jQuery('.project-info', jQuery(scope).parent()).html(result);
+		inProgress(scope, false);
 		jQuery('.project-info', scope).fadeIn(300);
 		transformed = true;
 		enableCloseInfo();
@@ -229,6 +208,7 @@ function enableCloseInfo() {
 			tl.reverse();
 		})
 }
+
 function disableCloseInfo() {
 	jQuery('.close-info').unbind('click');
 }
@@ -253,23 +233,24 @@ function animateSkills() {
 }
 
 function initPortfolioTl() {
+
 	if( !itemsOnScreen ) {
+		elementsScrollFix();
 		tlp.add(TweenLite.to(jQuery('.portfolio-item'), .1, {float: 'none'}))
 		tlp.add(TweenLite.to(jQuery('.portfolio-item'), 1, {ease: 'Power3.easeOut', left: 0}))
-
 		tlp.play();
 		itemsOnScreen = true;
 	}
-	else {
-		// tlp.reverse();
+	else if( itemsOnScreen ) {
+		elementsScrollFix();
 		tlp.add(TweenLite.to(jQuery('.portfolio-item'), .5, {ease: 'Power2.easeIn', left: -5000}))
 		tlp.add(TweenLite.to(jQuery('.portfolio-item'), .1, {float: 'left'}))
-
 		tlp.play();
-
 		itemsOnScreen = false;
 	}
-		
+	else {
+		return false;
+	}	
 }
 
 function resetPortfolioTl() {
@@ -277,16 +258,43 @@ function resetPortfolioTl() {
 	tlp.clear();
 }
 function initScrollTl() {
-	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: 35}))
-	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: 0}))
-	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: -35}))
-	tls.add(TweenLite.to(jQuery('#scroll-down'), .5, {rotation: 0}))
-	tls.reverse();
+	tls.add(TweenLite.to(jQuery('#scroll-down .fa'), .5, {y: 15, easing: Bounce.easeOut}))
+	tls.add(TweenLite.to(jQuery('#scroll-down .fa'), .5, {y: 0}))
+	// tls.reverse();
 }
 function stopScrollIndicator() {
 	tls.pause(0); //Go back to the start (true is to suppress events)
 	tls.clear();
 }
+
+function inProgress(scope, state) {
+
+	if( state ) {
+		jQuery('#loading', scope).fadeIn(100);
+
+		loading = TweenLite.to(jQuery('#loading i', scope), .3,{rotation: '+45', onComplete: function() {
+			this.restart();
+			console.log('spinning');
+		}})
+	}
+	else if( !state ) {
+		loading.kill()
+		jQuery('#loading', scope).fadeOut(100);
+	}
+	else {
+		return false;
+	}
+}
+
+ //In case some items are expanded when scrolling away from portfolio
+function elementsScrollFix() {
+	closeItem();
+	jQuery('.project-info').fadeOut(100);
+	jQuery('.close-info').fadeOut(100);
+	jQuery('#loading').fadeOut(100);
+}
+
+
 
 
 /*Anonymous function for being able to write proper jQuery code within wordpress
