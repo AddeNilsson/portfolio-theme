@@ -30,6 +30,9 @@ function fed_portfolio_scripts() {
 	wp_enqueue_script('TimelineLite', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TimelineLite.min.js', [], false, true);
 	wp_enqueue_script('EasePackPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/easing/EasePack.min.js', [], false, true);
 
+	wp_enqueue_script('ScrollToPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/plugins/ScrollToPlugin.min.js', [], false, true);
+
+	// wp_enqueue_script('ScrollToPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js', [], false, true);
 
 
 
@@ -106,7 +109,9 @@ function cpt_portfolio_init() {
         'hierarchical'       => true,
         'menu_position'      => null,
         'menu_icon'			 => 'dashicons-welcome-view-site',
-        'supports'           => array(),
+        'supports'           => array('title', 'editor'),
+        'register_meta_box_cb' => 'add_technologies_metabox'
+
     );
  
     register_post_type( 'portfolio', $args );
@@ -116,22 +121,43 @@ add_action( 'init', 'cpt_portfolio_init' );
 
 ## Meta ##
 
+function add_technologies_metabox() {
+    add_meta_box('tech_meta', 'Technologies', 'technologies_meta_fields', 'portfolio', 'normal', 'high');
+}
+function technologies_meta_fields() {
+    global $post;
+?>
+    <label for="tech-meta-box">Technologies</label> <input id="tech-meta-box" type="text" name="technologies" value="<?php echo get_post_meta($post->ID, 'technologies', true) ?>"><br>
+
+    <label for="project-url">Url for project</label> <input id="project-url" type="text" name="project-url" value="<?php echo get_post_meta($post->ID, 'project-url', true) ?>">
+ <?php    
+}
+
+function save_technologies_meta($post_id, $post) {
+
+    $technologies_meta['technologies'] = sanitize_text_field($_POST['technologies']);
+    $technologies_meta['project-url'] = sanitize_text_field($_POST['project-url']);
+
+
+    foreach($technologies_meta as $key => $value){
+        if(get_post_meta($post->ID, $key, FALSE)){
+            update_post_meta($post->ID, $key, $value); 
+        }
+        else {
+            add_post_meta($post->ID, $key, $value);
+        }
+    }
+}
+add_action('save_post', 'save_technologies_meta',1,2);
+
 function add_portfolio_meta() {
     global $post;
 
     if(!empty($post)) {
         $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
 
-        if($pageTemplate == 'front-page.php' )
-        {
-            add_meta_box(
-                'portfolio_meta', // $id
-                'Portfolio Customization', // $title
-                'display_portfolio_customization', // $callback
-                'page',
-                'normal',
-                'high'
-                );
+        if($pageTemplate == 'front-page.php' ) {
+            add_meta_box('portfolio_meta', 'Portfolio Customization', 'display_portfolio_customization', 'page', 'normal', 'high');
         }
     }
 }

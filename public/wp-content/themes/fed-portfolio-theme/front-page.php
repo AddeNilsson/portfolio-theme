@@ -55,29 +55,29 @@ get_header() ?>
 							</div>
 						</div>
 						<div class="row">
-							<div class="large-4 column">
+							<div class="large-5 column">
 								<p><?php echo get_post_meta($post->ID, 'user-about', true) ?></p>
 							</div>
-							<div class="large-8 column">
+							<div class="large-7 column">
 								<div class=" row">
 									<div class="small-12 column">
 										<h4><?php echo get_post_meta($post->ID, 'skill-heading', true) ?></h4>
 									</div>
 								</div>
 								<div class="row">
-									<div class="medium-6 large-3 column">
+									<div class="medium-6  column">
 										<h3 class="text-center"><?php echo get_post_meta($post->ID, 'skill-1', true) ?></h3>
 										<div class="demo" data-percent="<?php echo get_post_meta($post->ID, 'master-1', true) ?>"></div>
 									</div>
-									<div class="medium-6 large-3 column">
+									<div class="medium-6  column">
 										<h3 class="text-center"><?php echo get_post_meta($post->ID, 'skill-2', true) ?></h3>
 										<div class="demo" data-percent="<?php echo get_post_meta($post->ID, 'master-2', true) ?>"></div>
 									</div>
-									<div class="medium-6 large-3 column">
+									<div class="medium-6  column">
 										<h3 class="text-center"><?php echo get_post_meta($post->ID, 'skill-3', true) ?></h3>
 										<div class="demo" data-percent="<?php echo get_post_meta($post->ID, 'master-3', true) ?>"></div>
 									</div>
-									<div class="medium-6 large-3 column">
+									<div class="medium-6  column">
 										<h3 class="text-center"><?php echo get_post_meta($post->ID, 'skill-4', true) ?></h3>
 										<div class="demo" data-percent="<?php echo get_post_meta($post->ID, 'master-4', true) ?>"></div>
 									</div>

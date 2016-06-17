@@ -12,7 +12,7 @@ body {
 	background-size: cover;
 }
 html, body {
-	overflow-x: hidden;
+	// overflow-x: hidden;
 }
 .row {
 	max-width: 100%;
@@ -128,14 +128,18 @@ a {
 .about {
 	padding-top: 3rem;
 	padding-bottom: 3rem;
-	img {
-		border-radius: 100%;
+	// img {
+	// 	border-radius: 100%;
 
-	}
+	// }
 	.repeat {
 		padding-top: 2rem;
 		cursor: pointer;
 	}
+	h3 {
+		opacity: 0;
+	}
+
 }
 	
 .center-block {

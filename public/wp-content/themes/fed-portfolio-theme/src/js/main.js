@@ -30,7 +30,8 @@ jQuery(document).ready(function() {
 
 	if( !skills ) {
 		var scene = new ScrollMagic.Scene({ triggerElement: '.about h2'}).on('start', function() {
-			animateSkills();
+			TweenLite.to(jQuery('.about h3'), .3, {opacity: 4, ease: Power2.easeOut, onComplete: animateSkills});
+			// animateSkills();
 		});
 		// scene.addIndicators();
 		scene.addTo(controller);
@@ -72,15 +73,19 @@ jQuery(document).ready(function() {
 function initItemTl(element) {
 	var scope = jQuery(element).parent(); /* Stores a scope to be used as context */
 
+	// tl.add(TweenLite.to(jQuery(document), .3, {height: '+= 50vh' })) // .7
+	
+
 	tl.add(TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), 1, {opacity: 0, width: '0px' })) // .7
 	tl.add(TweenLite.to(jQuery('.project-link-text', element), .3, {opacity: 0, display: 'none'})) //.5
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .7, {rotation: 45, ease: Bounce.easeOut})) //.4
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .5, {opacity: 0, ease: 'Power2.easeOut'})) //.4. display: none, ger en rörig animation men vore bra...
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .1, {width: 'initial'}))
-	tl.add(TweenLite.to(jQuery('.project-link-img', element), 1, {backgroundColor: 'rgba(0,0,0,0.6)', minHeight: '60vh', ease: 'Power2.easeOut'})) // .1
-	tl.add(TweenLite.to(jQuery('.portfolio-item', jQuery(scope).parent()), .1, {border: '2px solid red', ease: 'Power2.easeOut', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]})) //.7
+	tl.add(TweenLite.to(jQuery('.project-link-img', element), 1, {backgroundColor: 'rgba(0,0,0,0.6)', minHeight: '75vh', ease: 'Power2.easeOut', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]})) // .1
 	tl.add(TweenLite.to(jQuery(element).parent(), 1.1, {className: '+= large-12', ease: 'Power2.easeOut'})) //.7
 	tl.play();
+//Don't want this to be reversed later on so leave out from timeline
+	TweenLite.to(window, 1.2, {scrollTo: {y: jQuery(scope).offset().top - 50}, ease: 'Power2.easeInOut'})
 }
 
 function openProject(_url, scope) {
@@ -119,8 +124,8 @@ function animateMenu() {
 		TweenLite.to(jQuery('#wrapper'), .8, {left: 250, ease: Power1.easeOut});
 	}
 	else if( expanded ) {
-		TweenLite.to(jQuery('#slider'), .3, {left: -250, ease: Power1.easeOut, onComplete: menuToggle, onCompleteParams: [false]});
-		TweenLite.to(jQuery('#wrapper'), .3, {left: 0, ease: Power1.easeOut});
+		TweenLite.to(jQuery('#slider'), .6, {left: -250, ease: Power1.easeIn, onComplete: menuToggle, onCompleteParams: [false]});
+		TweenLite.to(jQuery('#wrapper'), .6, {left: 0, ease: Power1.easeIn});
 	}
 	else {
 		return false;
