@@ -1,18 +1,19 @@
 .menu-toggle {
-	// margin-left: 2rem;
 	padding: 0.9rem;
 
 }
-
 .side-menu-cnt {
 	ul {
+		li {
+			margin-bottom: 0.5rem;
+		}
 
 		a {
-			font-size: 1.7rem;
+			font-size: 1.3rem;
+			font-weight: 600;
 		}
 	}
 }
-
 .portfolio {
 	.portfolio-item {
 		.portfolio-item-link {
@@ -27,9 +28,10 @@
 				.portfolio-post {
 					color: $light;
 					padding: 10% 5%;
+					min-height: 75vh;
 
-					p:first-child {
-						margin-top: 1.5rem
+					h2 {
+						margin-bottom: 1rem;
 					}
 				}
 			}

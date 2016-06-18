@@ -44,18 +44,12 @@ function fed_portfolio_scripts() {
 	// wp_enqueue_script('scroll-magic-animation-plug-in', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/animation.gsap.js', [], false, true);
 	wp_enqueue_script('scroll-magic-debug-plug-in', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
 
-	//Chart.js
-	// wp_enqueue_script('chart-js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js', [], false, true);
 
 	//Fed-Portfolio Custom Script
 	// wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/js/scripts.min.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
 
 	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/src/js/build/scripts.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
-
-
 	wp_localize_script('Fed-Portfolio-Script', 'ajaxCall', ['ajaxUrl' => get_template_directory_uri() . '/single.php']);
-
-
 }
 
 add_action( 'wp_enqueue_scripts', 'fed_portfolio_scripts' );
@@ -109,8 +103,8 @@ function cpt_portfolio_init() {
         'hierarchical'       => true,
         'menu_position'      => null,
         'menu_icon'			 => 'dashicons-welcome-view-site',
-        'supports'           => array('title', 'editor'),
-        'register_meta_box_cb' => 'add_technologies_metabox'
+        'supports'           => array('title'),
+        'register_meta_box_cb' => 'add_portfolio_item_metabox'
 
     );
  
@@ -121,25 +115,25 @@ add_action( 'init', 'cpt_portfolio_init' );
 
 ## Meta ##
 
-function add_technologies_metabox() {
-    add_meta_box('tech_meta', 'Technologies', 'technologies_meta_fields', 'portfolio', 'normal', 'high');
+function add_portfolio_item_metabox() {
+    add_meta_box('portfolio_item__meta', 'Portfolio Item Info', 'portfolio_item_meta_fields', 'portfolio', 'normal', 'high');
 }
-function technologies_meta_fields() {
-    global $post;
+function portfolio_item_meta_fields() {
+    // global $post;
+    get_template_part('templates/portfolio', 'fields');
 ?>
-    <label for="tech-meta-box">Technologies</label> <input id="tech-meta-box" type="text" name="technologies" value="<?php echo get_post_meta($post->ID, 'technologies', true) ?>"><br>
 
-    <label for="project-url">Url for project</label> <input id="project-url" type="text" name="project-url" value="<?php echo get_post_meta($post->ID, 'project-url', true) ?>">
  <?php    
 }
 
-function save_technologies_meta($post_id, $post) {
+function save_portfolio_item_meta($post_id, $post) {
 
-    $technologies_meta['technologies'] = sanitize_text_field($_POST['technologies']);
-    $technologies_meta['project-url'] = sanitize_text_field($_POST['project-url']);
-
-
-    foreach($technologies_meta as $key => $value){
+	$portfolio_item_meta['project-title'] = sanitize_text_field($_POST['project-title']);
+    $portfolio_item_meta['project-description'] = sanitize_text_field($_POST['project-description']);
+    $portfolio_item_meta['technologies'] = sanitize_text_field($_POST['technologies']);
+    $portfolio_item_meta['project-url'] = sanitize_text_field($_POST['project-url']);
+    
+    foreach($portfolio_item_meta as $key => $value){
         if(get_post_meta($post->ID, $key, FALSE)){
             update_post_meta($post->ID, $key, $value); 
         }
@@ -148,7 +142,7 @@ function save_technologies_meta($post_id, $post) {
         }
     }
 }
-add_action('save_post', 'save_technologies_meta',1,2);
+add_action('save_post', 'save_portfolio_item_meta',1,2);
 
 function add_portfolio_meta() {
     global $post;
@@ -211,30 +205,24 @@ $default_menu_exists = wp_get_nav_menu_object( $default_menu );
 if( !$default_menu_exists){
     $menu_id = wp_create_nav_menu($default_menu);
 
-    // Set up default menu items
+        // Set up default menu items
     wp_update_nav_menu_item($menu_id, 0, array(
         'menu-item-title' =>  __('Top'),
         'menu-item-classes' => 'home',
-        'menu-item-url' => home_url( '/' ), 
+        'menu-item-url' => '#wrapper', 
         'menu-item-status' => 'publish'));
 
     wp_update_nav_menu_item($menu_id, 0, array(
         'menu-item-title' =>  __('About'),
-        'menu-item-url' => home_url( '#about-anchor' ), 
+        'menu-item-url' => '#about-anchor', 
         'menu-item-status' => 'publish'));
     wp_update_nav_menu_item($menu_id, 0, array(
         'menu-item-title' =>  __('Portfolio'),
-        'menu-item-url' => home_url( '#portfolio-anchor' ), 
+        'menu-item-url' => '#portfolio-anchor', 
         'menu-item-status' => 'publish'));
-
-/* Kanske blog sen..?    
-    wp_update_nav_menu_item($menu_id, 0, array(
-        'menu-item-title' =>  __('Min Studieplan'),
-        'menu-item-url' => home_url( '/plan' ), 
-        'menu-item-status' => 'publish'));
-*/
 }
 
+## Custom user info ##
 function add_contact_methods($profile_fields) {
     // Add new fields
     $profile_fields['github'] = 'Github';
