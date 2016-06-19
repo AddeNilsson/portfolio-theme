@@ -208,6 +208,18 @@ a {
 					@include cc;
 					flex-direction: column;
 					color: $light;
+
+					img {
+						width: 80%;
+						padding: 0.5rem;
+					}
+					
+					.portfolio-post-right-col {
+
+						.project-url {
+							text-align: right;
+						}
+					}
 				}
 			}
 		}

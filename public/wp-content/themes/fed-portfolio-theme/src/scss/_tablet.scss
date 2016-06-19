@@ -30,6 +30,19 @@
 					padding: 10% 5%;
 					min-height: 75vh;
 
+					img {
+						width: 50%;
+					}
+
+					.single-content {
+						p {
+							margin-top: 1rem;
+						}
+					}
+
+					.portfolio-post-info {
+						border-top: 1px solid $lightOpac;
+					}
 					h2 {
 						margin-bottom: 1rem;
 					}
