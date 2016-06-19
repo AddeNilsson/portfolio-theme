@@ -29,7 +29,19 @@ a {
 	color: inherit;
 	transition: font-size, 0.5s;
 }
+.not-found {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
+	a{
+		border-bottom: 2px solid $lightOpac;
+		&:hover {
+			font-size: 1.6rem;
+		}
+	}
+}
 .cc {
 	display: flex;
 	justify-content: center;
@@ -195,6 +207,7 @@ a {
 
 				h4 {
 					font-size: 1.4rem;
+					margin-top: 1.5rem;
 				}
 			}
 			.project-info {
@@ -213,7 +226,7 @@ a {
 						width: 80%;
 						padding: 0.5rem;
 					}
-					
+
 					.portfolio-post-right-col {
 
 						.project-url {

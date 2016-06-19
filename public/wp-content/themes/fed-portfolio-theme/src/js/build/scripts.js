@@ -107,7 +107,6 @@ var tls = new TimelineLite({onComplete: function() {
 	this.restart();
 }});
 
-
 var controller = new ScrollMagic.Controller();
 
 jQuery(document).ready(function() {
@@ -122,7 +121,6 @@ jQuery(document).ready(function() {
 	if( !skills ) {
 		var scene = new ScrollMagic.Scene({ triggerElement: '.about h2'}).on('start', function() {
 			TweenLite.to(jQuery('.charts h4'), .3, {opacity: 1, ease: Power2.easeOut, onComplete: animateSkills});
-			// animateSkills();
 		});
 		scene.addTo(controller);
 	}
@@ -172,14 +170,14 @@ function initItemTl(element) {
 	var scope = jQuery(element).parent(); /* Stores a scope to be used as context */
 
 /*Fuckar upp responsive på tillbakavägen. Halvdan lösning nedan */
-	tl.add(TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), 1, {opacity: 0, width: '0' }))
-
+	tl.add(TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), 1, {opacity: 0, width: '0' })) // Om % så blir det jättefel
 	tl.add(TweenLite.to(jQuery('.project-link-text', element), .3, {opacity: 0, display: 'none'}))
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .7, {rotation: 45, ease: Bounce.easeOut}))
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .5, {opacity: 0, ease: 'Power2.easeOut'}))
-	// tl.add(TweenLite.to(jQuery('.project-link-img img', element), .5, {width: 'initial', ease: Power2.easeInOut})) //Orsakar lite höpp
 
 	tl.add(TweenLite.to(jQuery('.project-link-img', element), 1, {backgroundColor: 'rgba(0,0,0,0.6)', minHeight: '75vh', ease: 'Power2.easeOut', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
+	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .5, {width: '50%', ease: Power2.easeInOut})) //Orsakar lite höpp
+	
 	tl.add(TweenLite.to(jQuery(element).parent(), .1, {maxWidth: '850px'})) //Ändrat från none...
 	tl.add(TweenLite.to(jQuery(element).parent(), 1.1, {className: '+= large-10', ease: 'Power2.easeOut'}))
 
@@ -251,6 +249,7 @@ function closeItem() {
 	disableCloseInfo();
 	tl.pause(0, true); //Go back to the start (true is to suppress events)
 	tl.clear();
+	// jQuery('.project-link-img').css({minHeight: '0vh'});
 	jQuery('.project-link-text').fadeIn(400);
 	transformed = false;
 }

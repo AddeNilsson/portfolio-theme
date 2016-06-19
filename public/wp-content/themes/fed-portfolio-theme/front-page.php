@@ -5,6 +5,14 @@ Template name: Landing-page
 
 get_header() ?>
 
+<?php 
+
+if ( is_404() ) :
+	get_template_part('404');
+endif
+?>
+
+
 				<div id="head" class="row landing"> <!-- alt. row -->
 					<div class="small-12 column">
 						<div class="row">
@@ -114,7 +122,7 @@ get_header() ?>
 											<img src="<?php echo get_template_directory_uri() ?>/img/listing-white.svg">
 										</div>
 
-										<div class="small-12 large-5 column portfolio-item-link">
+										<div class="small-10 small-centered large-5 column portfolio-item-link">
 											<a class="custom-post-link" rel="<?php the_ID(); ?>" href="<?php the_permalink()?>">
 												<div class="row">
 													<div class="small-12 column">
@@ -147,4 +155,4 @@ get_header() ?>
 						</div>
 					</div>
 				</div>
-<?php include 'footer.php' ?>
+<?php get_footer(); ?>

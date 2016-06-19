@@ -3,6 +3,53 @@
 /* Disable the Admin Bar. */
 show_admin_bar(false);
 
+/* Remove comment support */
+function remove_comment_support() {
+    remove_post_type_support( 'post', 'comments' );
+    remove_post_type_support( 'page', 'comments' );
+}
+add_action('admin_menu', 'remove_comment_support');
+
+/* Favicon */
+function blog_favicon() {
+	echo '<link rel="Shortcut Icon" type="image/x-icon" href="'.get_template_directory_uri().'/img/favicon.png" />';
+}
+add_action('wp_head', 'blog_favicon');
+
+//Dynamsik copyright kombinerat med i <?php echo comicpress_copyright(); footer.php
+// function comicpress_copyright() {
+// 	global $wpdb;
+// 	$copyright_dates = $wpdb->get_results("
+// 		SELECT
+// 		YEAR(min(post_date_gmt)) AS firstdate,
+// 		YEAR(max(post_date_gmt)) AS lastdate
+// 		FROM
+// 		$wpdb->posts
+// 		WHERE
+// 		post_status = 'publish'
+// 	");
+// 	$output = '';
+// 	if($copyright_dates) {
+// 		$copyright = "&copy; " . $copyright_dates[0]->firstdate;
+// 		if($copyright_dates[0]->firstdate != $copyright_dates[0]->lastdate) {
+// 			$copyright .= '-' . $copyright_dates[0]->lastdate;
+// 		}
+// 		$output = $copyright;
+// 	}
+// 	return $output;
+// }
+
+// Image for login screen
+function login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/diamond-dark.svg);
+            padding-bottom: 30px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'login_logo' );
+
 
 function fed_portfolio_scripts() {
 /* Stylez */
@@ -51,16 +98,43 @@ function fed_portfolio_scripts() {
 	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/src/js/build/scripts.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
 	wp_localize_script('Fed-Portfolio-Script', 'ajaxCall', ['ajaxUrl' => get_template_directory_uri() . '/single.php']);
 }
-
 add_action( 'wp_enqueue_scripts', 'fed_portfolio_scripts' );
 
+
+/* Theme menu */
 function menus() {
     register_nav_menus(['primary' => 'Animated left menu']);
 }
 add_action('after_setup_theme','menus');
 
+/* Default nav menu */
 
-## Custom post type ##
+// Check if the menu exists
+$default_menu = 'FED portfolio menu';
+$default_menu_exists = wp_get_nav_menu_object( $default_menu );
+
+// Create once if doesn't exists
+if( !$default_menu_exists){
+    $menu_id = wp_create_nav_menu($default_menu);
+
+        // Set up default menu items
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('Top'),
+        'menu-item-classes' => 'home',
+        'menu-item-url' => '#wrapper', 
+        'menu-item-status' => 'publish'));
+
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('About'),
+        'menu-item-url' => '#about-anchor', 
+        'menu-item-status' => 'publish'));
+    wp_update_nav_menu_item($menu_id, 0, array(
+        'menu-item-title' =>  __('Portfolio'),
+        'menu-item-url' => '#portfolio-anchor', 
+        'menu-item-status' => 'publish'));
+}
+
+/* Custom post type */
 
 function cpt_portfolio_init() {
     $labels = array(
@@ -110,20 +184,16 @@ function cpt_portfolio_init() {
  
     register_post_type( 'portfolio', $args );
 }
- 
 add_action( 'init', 'cpt_portfolio_init' );
 
-## Meta ##
+/* Custom Meta Fields for Portfolio CPT */
 
 function add_portfolio_item_metabox() {
     add_meta_box('portfolio_item__meta', 'Portfolio Item Info', 'portfolio_item_meta_fields', 'portfolio', 'normal', 'high');
 }
-function portfolio_item_meta_fields() {
-    // global $post;
-    get_template_part('templates/portfolio', 'fields');
-?>
 
- <?php    
+function portfolio_item_meta_fields() {
+    get_template_part('templates/portfolio', 'fields');
 }
 
 function save_portfolio_item_meta($post_id, $post) {
@@ -142,20 +212,23 @@ function save_portfolio_item_meta($post_id, $post) {
         }
     }
 }
-add_action('save_post', 'save_portfolio_item_meta',1,2);
+add_action( 'save_post', 'save_portfolio_item_meta', 1, 2 );
+
+/* Custom Meta Fields for Landing page-template */
 
 function add_portfolio_meta() {
     global $post;
 
     if(!empty($post)) {
-        $pageTemplate = get_post_meta($post->ID, '_wp_page_template', true);
+        $pageTemplate = get_post_meta( $post->ID, '_wp_page_template', true );
 
         if($pageTemplate == 'front-page.php' ) {
-            add_meta_box('portfolio_meta', 'Portfolio Customization', 'display_portfolio_customization', 'page', 'normal', 'high');
+            add_meta_box( 'portfolio_meta', 'Portfolio Customization', 'display_portfolio_customization', 'page', 'normal', 'high' );
+   			remove_post_type_support( 'page', 'editor' );
+
         }
     }
 }
-
 add_action('add_meta_boxes', 'add_portfolio_meta');
 
 function display_portfolio_customization() {
@@ -195,42 +268,13 @@ function save_portfolio_customization($post_id, $post) {
 }
 add_action('save_post', 'save_portfolio_customization',1,2);
 
-### Default nav menu ###
-
-// Check if the menu exists
-$default_menu = 'FED portfolio menu';
-$default_menu_exists = wp_get_nav_menu_object( $default_menu );
-
-// Create if doesn't exists Logged in menu
-if( !$default_menu_exists){
-    $menu_id = wp_create_nav_menu($default_menu);
-
-        // Set up default menu items
-    wp_update_nav_menu_item($menu_id, 0, array(
-        'menu-item-title' =>  __('Top'),
-        'menu-item-classes' => 'home',
-        'menu-item-url' => '#wrapper', 
-        'menu-item-status' => 'publish'));
-
-    wp_update_nav_menu_item($menu_id, 0, array(
-        'menu-item-title' =>  __('About'),
-        'menu-item-url' => '#about-anchor', 
-        'menu-item-status' => 'publish'));
-    wp_update_nav_menu_item($menu_id, 0, array(
-        'menu-item-title' =>  __('Portfolio'),
-        'menu-item-url' => '#portfolio-anchor', 
-        'menu-item-status' => 'publish'));
-}
-
-## Custom user info ##
+/* Custom user info fields */
 function add_contact_methods($profile_fields) {
-    // Add new fields
     $profile_fields['github'] = 'Github';
-    $profile_fields['twitter'] = 'Twitter Username';
+    $profile_fields['twitter'] = 'Twitter Url';
     $profile_fields['facebook'] = 'Facebook URL';
     $profile_fields['phone'] = 'Phonenumber';
 
     return $profile_fields;
 }
-
 add_filter('user_contactmethods', 'add_contact_methods');
