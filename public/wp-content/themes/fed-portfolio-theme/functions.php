@@ -1,5 +1,7 @@
 <?php 
 
+######################## Misc ##########################
+
 /* Disable the Admin Bar. */
 show_admin_bar(false);
 
@@ -16,30 +18,7 @@ function blog_favicon() {
 }
 add_action('wp_head', 'blog_favicon');
 
-//Dynamsik copyright kombinerat med i <?php echo comicpress_copyright(); footer.php
-// function comicpress_copyright() {
-// 	global $wpdb;
-// 	$copyright_dates = $wpdb->get_results("
-// 		SELECT
-// 		YEAR(min(post_date_gmt)) AS firstdate,
-// 		YEAR(max(post_date_gmt)) AS lastdate
-// 		FROM
-// 		$wpdb->posts
-// 		WHERE
-// 		post_status = 'publish'
-// 	");
-// 	$output = '';
-// 	if($copyright_dates) {
-// 		$copyright = "&copy; " . $copyright_dates[0]->firstdate;
-// 		if($copyright_dates[0]->firstdate != $copyright_dates[0]->lastdate) {
-// 			$copyright .= '-' . $copyright_dates[0]->lastdate;
-// 		}
-// 		$output = $copyright;
-// 	}
-// 	return $output;
-// }
-
-// Image for login screen
+/* Image for login screen */
 function login_logo() { ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
@@ -50,46 +29,39 @@ function login_logo() { ?>
 <?php }
 add_action( 'login_enqueue_scripts', 'login_logo' );
 
+######################## Scripts / Stylez ##########################
 
 function fed_portfolio_scripts() {
-/* Stylez */
 
 	//Normalize
-	wp_enqueue_style('normalize', 'https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css');
+	wp_enqueue_style('normalize', '//cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css');
 
 	//Font-awesome
-	wp_enqueue_style('font-awesome', "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css");
+	wp_enqueue_style('font-awesome', "//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css");
 
 	// Foundation CSS
-	wp_enqueue_style('foundation-css', 'https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.css');
+	wp_enqueue_style('foundation-css', '//cdn.jsdelivr.net/foundation/6.2.1/foundation.min.css');
 
 	// Theme stylesheet.
 	wp_enqueue_style( 'fed-portfolio-style', get_template_directory_uri() . '/css/style.css', ['foundation-css', 'font-awesome'] );
 
-/* Scripts */
-
 	// jQuery -->
 	wp_enqueue_script('jquery');
+	wp_enqueue_script('browserDetect', get_template_directory_uri() . '/js/browserCheck.js', array(), false, false);
 
 	// Green Sock
-	wp_enqueue_script('tweenLite', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js', array(), false, true);
-	wp_enqueue_script('CSSPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/plugins/CSSPlugin.min.js', [], false, true);
-	wp_enqueue_script('TimelineLite', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TimelineLite.min.js', [], false, true);
-	wp_enqueue_script('EasePackPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/easing/EasePack.min.js', [], false, true);
-
-	wp_enqueue_script('ScrollToPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/plugins/ScrollToPlugin.min.js', [], false, true);
-
-	// wp_enqueue_script('ScrollToPlugin', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js', [], false, true);
-
-
+	wp_enqueue_script('tweenLite', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js', array(), false, true);
+	wp_enqueue_script('CSSPlugin', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/plugins/CSSPlugin.min.js', [], false, true);
+	wp_enqueue_script('TimelineLite', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TimelineLite.min.js', [], false, true);
+	wp_enqueue_script('EasePackPlugin', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/easing/EasePack.min.js', [], false, true);
+	wp_enqueue_script('ScrollToPlugin', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/plugins/ScrollToPlugin.min.js', [], false, true);
 
 	// Foundation
-	wp_enqueue_script('foundation-js', 'https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js', [], false, true);
+	wp_enqueue_script('foundation-js', '//cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js', [], false, true);
 
 	//Scroll Magic
-	wp_enqueue_script('scroll-magic', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/ScrollMagic.js', [], false, true);
-	// wp_enqueue_script('scroll-magic-animation-plug-in', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/animation.gsap.js', [], false, true);
-	wp_enqueue_script('scroll-magic-debug-plug-in', 'https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
+	wp_enqueue_script('scroll-magic', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/ScrollMagic.js', [], false, true);
+	// wp_enqueue_script('scroll-magic-debug-plug-in', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
 
 
 	//Fed-Portfolio Custom Script
@@ -100,14 +72,14 @@ function fed_portfolio_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'fed_portfolio_scripts' );
 
+######################## Theme menu Location ##########################
 
-/* Theme menu */
 function menus() {
     register_nav_menus(['primary' => 'Animated left menu']);
 }
 add_action('after_setup_theme','menus');
 
-/* Default nav menu */
+######################## Theme menu ##########################
 
 // Check if the menu exists
 $default_menu = 'FED portfolio menu';
@@ -117,7 +89,7 @@ $default_menu_exists = wp_get_nav_menu_object( $default_menu );
 if( !$default_menu_exists){
     $menu_id = wp_create_nav_menu($default_menu);
 
-        // Set up default menu items
+    // Set up default menu items
     wp_update_nav_menu_item($menu_id, 0, array(
         'menu-item-title' =>  __('Top'),
         'menu-item-classes' => 'home',
@@ -134,34 +106,34 @@ if( !$default_menu_exists){
         'menu-item-status' => 'publish'));
 }
 
-/* Custom post type */
+######################## Portfolio CPT ##########################
 
 function cpt_portfolio_init() {
     $labels = array(
-        'name'                  => _x( 'Portfolios', 'Post type general name', 'textdomain' ),
-        'singular_name'         => _x( 'Portfolio', 'Post type singular name', 'textdomain' ),
-        'menu_name'             => _x( 'Portfolios', 'Admin Menu text', 'textdomain' ),
-        'name_admin_bar'        => _x( 'Portfolio', 'Add New on Toolbar', 'textdomain' ),
-        'add_new'               => __( 'Add New', 'textdomain' ),
-        'add_new_item'          => __( 'Add New Portfolio', 'textdomain' ),
-        'new_item'              => __( 'New Portfolio', 'textdomain' ),
-        'edit_item'             => __( 'Edit Portfolio', 'textdomain' ),
-        'view_item'             => __( 'View Portfolio', 'textdomain' ),
-        'all_items'             => __( 'All Portfolios', 'textdomain' ),
-        'search_items'          => __( 'Search Portfolios', 'textdomain' ),
-        'parent_item_colon'     => __( 'Parent Portfolios:', 'textdomain' ),
-        'not_found'             => __( 'No portfolios found.', 'textdomain' ),
-        'not_found_in_trash'    => __( 'No portfolios found in Trash.', 'textdomain' ),
-        'featured_image'        => _x( 'Portfolio Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'textdomain' ),
-        'archives'              => _x( 'Portfolio archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'textdomain' ),
-        'insert_into_item'      => _x( 'Insert into portfolio', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'textdomain' ),
-        'uploaded_to_this_item' => _x( 'Uploaded to this portfolio', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'textdomain' ),
-        'filter_items_list'     => _x( 'Filter portfolios list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'textdomain' ),
-        'items_list_navigation' => _x( 'Portfolios list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'textdomain' ),
-        'items_list'            => _x( 'Portfolios list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'textdomain' ),
+        'name'                  => _x( 'Portfolios', 'Post type general name', 'fed-portfolio-theme' ),
+        'singular_name'         => _x( 'Portfolio', 'Post type singular name', 'fed-portfolio-theme' ),
+        'menu_name'             => _x( 'Portfolios', 'Admin Menu text', 'fed-portfolio-theme' ),
+        'name_admin_bar'        => _x( 'Portfolio', 'Add New on Toolbar', 'fed-portfolio-theme' ),
+        'add_new'               => __( 'Add New', 'fed-portfolio-theme' ),
+        'add_new_item'          => __( 'Add New Portfolio', 'fed-portfolio-theme' ),
+        'new_item'              => __( 'New Portfolio', 'fed-portfolio-theme' ),
+        'edit_item'             => __( 'Edit Portfolio', 'fed-portfolio-theme' ),
+        'view_item'             => __( 'View Portfolio', 'fed-portfolio-theme' ),
+        'all_items'             => __( 'All Portfolios', 'fed-portfolio-theme' ),
+        'search_items'          => __( 'Search Portfolios', 'fed-portfolio-theme' ),
+        'parent_item_colon'     => __( 'Parent Portfolios:', 'fed-portfolio-theme' ),
+        'not_found'             => __( 'No portfolios found.', 'fed-portfolio-theme' ),
+        'not_found_in_trash'    => __( 'No portfolios found in Trash.', 'fed-portfolio-theme' ),
+        'featured_image'        => _x( 'Portfolio Cover Image', 'Overrides the “Featured Image” phrase for this post type. Added in 4.3', 'fed-portfolio-theme' ),
+        'set_featured_image'    => _x( 'Set cover image', 'Overrides the “Set featured image” phrase for this post type. Added in 4.3', 'fed-portfolio-theme' ),
+        'remove_featured_image' => _x( 'Remove cover image', 'Overrides the “Remove featured image” phrase for this post type. Added in 4.3', 'fed-portfolio-theme' ),
+        'use_featured_image'    => _x( 'Use as cover image', 'Overrides the “Use as featured image” phrase for this post type. Added in 4.3', 'fed-portfolio-theme' ),
+        'archives'              => _x( 'Portfolio archives', 'The post type archive label used in nav menus. Default “Post Archives”. Added in 4.4', 'fed-portfolio-theme' ),
+        'insert_into_item'      => _x( 'Insert into portfolio', 'Overrides the “Insert into post”/”Insert into page” phrase (used when inserting media into a post). Added in 4.4', 'fed-portfolio-theme' ),
+        'uploaded_to_this_item' => _x( 'Uploaded to this portfolio', 'Overrides the “Uploaded to this post”/”Uploaded to this page” phrase (used when viewing media attached to a post). Added in 4.4', 'fed-portfolio-theme' ),
+        'filter_items_list'     => _x( 'Filter portfolios list', 'Screen reader text for the filter links heading on the post type listing screen. Default “Filter posts list”/”Filter pages list”. Added in 4.4', 'fed-portfolio-theme' ),
+        'items_list_navigation' => _x( 'Portfolios list navigation', 'Screen reader text for the pagination heading on the post type listing screen. Default “Posts list navigation”/”Pages list navigation”. Added in 4.4', 'fed-portfolio-theme' ),
+        'items_list'            => _x( 'Portfolios list', 'Screen reader text for the items list heading on the post type listing screen. Default “Posts list”/”Pages list”. Added in 4.4', 'fed-portfolio-theme' ),
     );
  
     $args = array(
@@ -177,7 +149,7 @@ function cpt_portfolio_init() {
         'hierarchical'       => true,
         'menu_position'      => null,
         'menu_icon'			 => 'dashicons-welcome-view-site',
-        'supports'           => array('title'),
+        'supports'           => array('title', 'thumbnail'),
         'register_meta_box_cb' => 'add_portfolio_item_metabox'
 
     );
@@ -185,8 +157,9 @@ function cpt_portfolio_init() {
     register_post_type( 'portfolio', $args );
 }
 add_action( 'init', 'cpt_portfolio_init' );
+add_theme_support( 'post-thumbnails', array( 'portfolio' ) );
 
-/* Custom Meta Fields for Portfolio CPT */
+######################## Meta fields for Portfolio ##########################
 
 function add_portfolio_item_metabox() {
     add_meta_box('portfolio_item__meta', 'Portfolio Item Info', 'portfolio_item_meta_fields', 'portfolio', 'normal', 'high');
@@ -214,7 +187,7 @@ function save_portfolio_item_meta($post_id, $post) {
 }
 add_action( 'save_post', 'save_portfolio_item_meta', 1, 2 );
 
-/* Custom Meta Fields for Landing page-template */
+######################## Meta fields for Landing Page Template ##########################
 
 function add_portfolio_meta() {
     global $post;
@@ -268,7 +241,8 @@ function save_portfolio_customization($post_id, $post) {
 }
 add_action('save_post', 'save_portfolio_customization',1,2);
 
-/* Custom user info fields */
+######################## Custom User Info fields ##########################
+
 function add_contact_methods($profile_fields) {
     $profile_fields['github'] = 'Github';
     $profile_fields['twitter'] = 'Twitter Url';

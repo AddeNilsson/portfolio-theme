@@ -1,7 +1,7 @@
 <?php while( have_posts() ) : the_post() ?>
 
 <div class="row">
-    <div class="medium-10 medium-centered column portfolio-post"><!--show-for-medium ?-->
+    <div class="medium-10 medium-centered column portfolio-post">
 
         <?php if( !empty(get_post_meta($post->ID, 'project-title', true)) ) :  ?>
         <div class="row">
@@ -14,15 +14,21 @@
         <div class="row portfolio-post-info show-for-medium">
 
             <?php if( !empty( get_post_meta( $post->ID, 'project-description', true ) ) ) : ?>
-            <div class="medium-12 large-7 column single-content"><!--show-for-medium ?-->
+            <div class="medium-12 large-7 column single-content">
                 <p><?php echo get_post_meta( $post->ID, 'project-description', true ) ?></p>
             </div>
             <?php endif ?>
 
             <div class=" small-10 medium-12 large-5 column portfolio-post-right-col">
-                <div class="row"> <!-- hide-for-landscape om på mobil inte annars..? -->
+                <div class="row">
                     <div class="medium-12">
+                        
+                    <?php if( has_post_thumbnail() ) : ?>
+                        <img class="responsive-img center-block" src="<?php echo the_post_thumbnail_url() ?>">
+                    <?php else : ?>
                         <img class="responsive-img center-block" src="<?php echo get_template_directory_uri()?>/img/diamond-white.svg">
+                    <?php endif ?>
+                    
                     </div>
                 </div>
                 
@@ -46,11 +52,17 @@
             </div>
         </div>
 
-        <div class="row column portfolio-post-info show-for-small-only"> <!-- added column to this row -->
-            <div class=" small-10 small-centered column portfolio-post-right-col"> <!-- small-10 -->
+        <div class="row column portfolio-post-info show-for-small-only">
+            <div class=" small-10 small-centered column portfolio-post-right-col">
                 <div class="row">
                     <div class="medium-12">
+                        
+                    <?php if( has_post_thumbnail() ) : ?>
+                        <img class="responsive-img center-block" src="<?php echo the_post_thumbnail_url() ?>">
+                    <?php else : ?>
                         <img class="responsive-img center-block" src="<?php echo get_template_directory_uri()?>/img/diamond-white.svg">
+                    <?php endif ?>
+
                     </div>
                 </div>
                 
