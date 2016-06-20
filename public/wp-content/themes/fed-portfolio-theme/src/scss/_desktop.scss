@@ -3,9 +3,6 @@ a:hover {
 }
 .side-menu-cnt {
 	ul {
-		a {
-			// font-size: 1.9rem;
-		}
 		a:hover {
 			font-size: 1.6rem;
 			border-bottom: 1px solid white;
@@ -22,8 +19,7 @@ a:hover {
 .landing{
 	.avatar {
 		filter: none;
-		-webkit-filter: grayscale(0%) brightness(1);
-		transition: filter,.8s, border-color, .8s;
+		transition: border-color, .8s;
 	}
 	.avatar:hover{
 		border-color: rgba(0,0,0,0.6);
@@ -55,8 +51,8 @@ a:hover {
 
 					img {
 						width: 85%;
+						margin-top: 1rem;
 					}
-
 					hr {
 						margin: 0;
 					}

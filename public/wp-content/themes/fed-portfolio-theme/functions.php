@@ -61,14 +61,16 @@ function fed_portfolio_scripts() {
 
 	//Scroll Magic
 	wp_enqueue_script('scroll-magic', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/ScrollMagic.js', [], false, true);
-	// wp_enqueue_script('scroll-magic-debug-plug-in', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
-
 
 	//Fed-Portfolio Custom Script
-	// wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/js/scripts.min.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
-
-	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/src/js/build/scripts.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
+	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/js/scripts.min.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
 	wp_localize_script('Fed-Portfolio-Script', 'ajaxCall', ['ajaxUrl' => get_template_directory_uri() . '/single.php']);
+
+	/* ### Debug ###
+	wp_enqueue_script('Debug-Fed-Portfolio-Script', get_template_directory_uri() . '/src/js/build/scripts.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
+	wp_enqueue_script('scroll-magic-debug-plug-in', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
+	*/
+
 }
 add_action( 'wp_enqueue_scripts', 'fed_portfolio_scripts' );
 
@@ -212,23 +214,17 @@ function save_portfolio_customization($post_id, $post) {
 
     $portfolio_meta['user_name'] = sanitize_text_field($_POST['user_name']);
     $portfolio_meta['user_title'] = sanitize_text_field($_POST['user_title']);
-
     $portfolio_meta['user-about'] = sanitize_text_field($_POST['user-about']);
 
     $portfolio_meta['skill-heading'] = sanitize_text_field($_POST['skill-heading']);
-
     $portfolio_meta['skill-1'] = sanitize_text_field($_POST['skill-1']);
     $portfolio_meta['master-1'] = sanitize_text_field($_POST['master-1']);
-
     $portfolio_meta['skill-2'] = sanitize_text_field($_POST['skill-2']);
     $portfolio_meta['master-2'] = sanitize_text_field($_POST['master-2']);
-
     $portfolio_meta['skill-3'] = sanitize_text_field($_POST['skill-3']);
     $portfolio_meta['master-3'] = sanitize_text_field($_POST['master-3']);
-
     $portfolio_meta['skill-4'] = sanitize_text_field($_POST['skill-4']);
     $portfolio_meta['master-4'] = sanitize_text_field($_POST['master-4']);
-
 
     foreach($portfolio_meta as $key => $value){
         if(get_post_meta($post->ID, $key, FALSE)){

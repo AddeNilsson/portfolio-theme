@@ -1,19 +1,16 @@
 <?php
+
 /*
 Template name: Landing-page
 */
 
-get_header() ?>
-
-<?php 
+get_header();
 
 if ( is_404() ) :
 	get_template_part('404');
-endif
+endif;
 ?>
-
-
-				<div id="head" class="row landing"> <!-- alt. row -->
+				<div id="head" class="row landing">
 					<div class="small-12 column">
 						<div class="row">
 							<div class="small-12 column">
@@ -31,12 +28,12 @@ endif
 								</div>
 								<div class="row">
 									<div class="small-12 medium-6 column medium-centered">
-										<h1 class="text-center"><?php echo get_post_meta($post->ID, 'user_name', true) ?></h1>
+										<h1 class="text-center"><?php echo get_post_meta($post->ID, 'user_name', true); ?></h1>
 									</div>
 								</div>
 								<div class="row">
 									<div class="small-12 medium-6 column medium-centered">
-										<h3 class="text-center"><?php echo get_post_meta($post->ID, 'user_title', true) ?></h3>
+										<h3 class="text-center"><?php echo get_post_meta($post->ID, 'user_title', true); ?></h3>
 									</div>
 								</div>
 							</div>
@@ -47,11 +44,11 @@ endif
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>	
 
 				<div id="about-anchor" class="row">
 					<div class="small-12 column show-for-medium hr">
-						<img src="<?php echo get_template_directory_uri()?>/img/hr-white.svg" alt="horizontal line">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/hr-white.svg" alt="horizontal line">
 					</div>
 				</div>
 
@@ -64,29 +61,29 @@ endif
 						</div>
 						<div class="row">
 							<div class="large-5 column">
-								<p><?php echo get_post_meta($post->ID, 'user-about', true) ?></p>
+								<p><?php echo get_post_meta($post->ID, 'user-about', true); ?></p>
 							</div>
 							<div class="large-7 column">
 								<div class=" row">
 									<div class="small-12 column">
-										<h4><?php echo get_post_meta($post->ID, 'skill-heading', true) ?></h4>
+										<h4><?php echo get_post_meta($post->ID, 'skill-heading', true); ?></h4>
 									</div>
 								</div>
 								<div class="row charts">
 									<div class="medium-6 column">
-										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-1', true) ?></h4>
+										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-1', true); ?></h4>
 										<div class="chart" data-percent="<?php echo get_post_meta($post->ID, 'master-1', true) ?>"></div>
 									</div>
 									<div class="medium-6 column">
-										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-2', true) ?></h4>
+										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-2', true); ?></h4>
 										<div class="chart" data-percent="<?php echo get_post_meta($post->ID, 'master-2', true) ?>"></div>
 									</div>
 									<div class="medium-6 column">
-										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-3', true) ?></h4>
+										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-3', true); ?></h4>
 										<div class="chart" data-percent="<?php echo get_post_meta($post->ID, 'master-3', true) ?>"></div>
 									</div>
 									<div class="medium-6 column">
-										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-4', true) ?></h4>
+										<h4 class="text-center"><?php echo get_post_meta($post->ID, 'skill-4', true); ?></h4>
 										<div class="chart" data-percent="<?php echo get_post_meta($post->ID, 'master-4', true) ?>"></div>
 									</div>
 								</div>
@@ -99,10 +96,10 @@ endif
 						</div>
 					</div>
 				</div>
-
+				
 				<div id="portfolio-anchor" class="row">
 					<div class="small-12 column show-for-medium hr">
-						<img src="<?php echo get_template_directory_uri()?>/img/hr-white.svg" alt="horizontal line">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/hr-white.svg" alt="horizontal line">
 					</div>
 				</div>
 			
@@ -119,11 +116,11 @@ endif
 
 									<div class="row portfolio-item">
 										<div class="small-6 column portfolio-item-listing show-for-large">
-											<img src="<?php echo get_template_directory_uri() ?>/img/listing-white.svg">
+											<img src="<?php echo get_template_directory_uri(); ?>/img/listing-white.svg">
 										</div>
 
 										<div class="small-10 small-centered large-5 column portfolio-item-link">
-											<a class="custom-post-link" rel="<?php the_ID(); ?>" href="<?php the_permalink()?>">
+											<a class="custom-post-link" rel="<?php the_ID(); ?>" href="<?php the_permalink();?>">
 												<div class="row">
 													<div class="small-12 column">
 															<i id="close-info" class="fa fa-times close-info"></i>
@@ -133,10 +130,10 @@ endif
 													<div class="row">
 														<div id="loading" class="small-12 column text-center loading"><i class="fa fa-spinner fa-4x"></i></div>
 													</div>
-													<img src="<?php echo get_template_directory_uri() ?>/img/diamond-white.svg" alt="White diamond shape">
+													<img src="<?php echo get_template_directory_uri(); ?>/img/diamond-white.svg" alt="White diamond shape">
 												</div>
 												<div class="project-link-text">
-													<h4><?php echo get_post_meta( $post->ID, 'project-title', true ) ?></h4>
+													<h4><?php echo get_post_meta( $post->ID, 'project-title', true ); ?></h4>
 													<p>View project</p>
 												</div>
 											</a>
@@ -155,4 +152,11 @@ endif
 						</div>
 					</div>
 				</div>
+
+				<div class="row">
+					<div class="small-12 column show-for-medium hr">
+						<img src="<?php echo get_template_directory_uri(); ?>/img/hr-white.svg" alt="horizontal line">
+					</div>
+				</div>
+
 <?php get_footer(); ?>

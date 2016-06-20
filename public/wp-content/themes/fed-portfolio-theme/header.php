@@ -11,7 +11,6 @@
 
 	<body>
 		<header id="slider" class="row side-menu-cnt">
-
 			<div class="small-12 column">
 				<div class="row">
 					<div id="user-menu-portrait" class="small-6 medium-8 large-10 column small-centered menu-portrait">
@@ -48,10 +47,8 @@
 					<div class="small-3 column">
 						<a href="mailto:<?php echo get_bloginfo('admin_email')?>"><i class="fa fa-envelope"></i></a>
 					</div>
-
 				</div>
 			</div>
-
 		</header>
 
 		<div id="wrapper" class="row">

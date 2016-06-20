@@ -92,17 +92,16 @@
 	
 })(jQuery);
 'use strict';
-
 var expanded = false; //menu
-var skills = false; //Animates SKill charts
+var skills = false; //Animated skill charts
 var transformed = false; //portfolio single posts
 var itemsOnScreen = false; //portfolio item visibilty
-var scrollIndicator = true; //scroll down arrows animation
+var scrollIndicator = true; //scroll down arrow animation
 var loading; //Holds loading tween
 
 var tl = new TimelineLite({paused: true, onReverseComplete: closeItem}); // single portfolio items timeline
-var tlp = new TimelineLite({paused: true, onComplete: resetPortfolioTl}); //potfolio-items animation timeline
-var tls = new TimelineLite({onComplete: function() {
+var tlp = new TimelineLite({paused: true, onComplete: resetPortfolioTl}); //portfolio-items animation timeline
+var tls = new TimelineLite({onComplete: function() { // scrollarrow timeline
 	this.restart();
 }});
 
@@ -117,6 +116,8 @@ if( userAgent.indexOf('MSIE') > -1 || Object.hasOwnProperty.call(window, "Active
 jQuery(document).ready(function() {
 
 	initScrollTl();
+	jQuery('#user_portrait img').attr('width', '');
+	jQuery('#user_portrait img').attr('height', '');
 
 	var scrollDownScene = new ScrollMagic.Scene({triggerElement: '#about-anchor'}).on('start', function() {
 			stopScrollIndicator();
@@ -143,15 +144,10 @@ jQuery(document).ready(function() {
 
 	jQuery('.main-menu a').on('click', function(e) {
 		e.preventDefault();
-
 		target = jQuery(this).attr('href'); //
-
 		TweenLite.to(window, 1.5, {scrollTo: {y: jQuery(target).offset().top}, ease: Power2.easeInOut});
 	})
 	
-	jQuery('#user_portrait img').attr('width', '');
-	jQuery('#user_portrait img').attr('height', '');
-
 	jQuery('.custom-post-link').on('click', function(e) {
 		e.preventDefault();
 
@@ -172,32 +168,22 @@ jQuery(document).ready(function() {
 function initItemTl(element) {
 	var scope = jQuery(element).parent(); /* Stores a scope to be used as context */
 
-/*Fuckar upp responsive på tillbakavägen. Halvdan lösning nedan */
-	tl.add(TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), .8, {opacity: 0, width: '0' })) // Om % så blir det jättefel
+	tl.add(TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), .8, {opacity: 0, width: '0' })) /* Messes up responsiveness on reverse */
 	tl.add(TweenLite.to(jQuery('.project-link-text', element), .2, {opacity: 0, display: 'none'}))
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .6, {rotation: 45, ease: Bounce.easeOut}))
 	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .4, {opacity: 0, ease: 'Power2.easeOut'}))
-
 	tl.add(TweenLite.to(jQuery('.project-link-img', element), .8, {backgroundColor: 'rgba(0,0,0,0.6)', minHeight: '75vh', ease: 'Power2.easeOut'}))
-	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .4, {width: '50%', ease: Power2.easeInOut})) //Orsakar lite höpp
-	
-	tl.add(TweenLite.to(jQuery(element).parent(), .1, {maxWidth: '850px', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]})) //Ändrat från none...
+	tl.add(TweenLite.to(jQuery('.project-link-img img', element), .4, {width: '50%', ease: Power2.easeInOut}))
+	tl.add(TweenLite.to(jQuery(element).parent(), .1, {maxWidth: '850px', onComplete: openProject, onCompleteParams: [jQuery(element).attr('href'), scope]}))
 	tl.add(TweenLite.to(jQuery(element).parent(), .8, {className: '+= large-10', ease: 'Power2.easeOut'}))
 
 	tl.play();
 
 //Don't want this to be reversed later on so leave out from timeline
 	TweenLite.to(window, 1.2, {scrollTo: {y: jQuery(scope).offset().top - 50}, ease: 'Power2.easeInOut'})
-
-/* Halvbra lösning utanför tl
-	TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), 1, {opacity: 0, width: '0%' })
-	TweenLite.to(jQuery('.portfolio-item-listing', jQuery(scope).parent()), 1, {opacity: 1, width: '50%' })
-*/
-
 }
 
 function openProject(_url, scope) {
-
 	inProgress(scope, true);
 	var url = _url;
 
@@ -241,6 +227,7 @@ function animateMenu() {
 		return false;
 	}
 }
+
 function menuToggle(state) {
 	expanded = state;
 }
@@ -282,16 +269,17 @@ function initPortfolioTl() {
 }
 
 function resetPortfolioTl() {
-	tl.pause(0); //Go back to the start (true is to suppress events)
+	tl.pause(0); //Go back to the start
 	tlp.clear();
 }
+
 function initScrollTl() {
 	tls.add(TweenLite.to(jQuery('#scroll-down .fa'), .5, {y: 15, easing: Bounce.easeOut}))
 	tls.add(TweenLite.to(jQuery('#scroll-down .fa'), .5, {y: 0}))
-	// tls.reverse();
 }
+
 function stopScrollIndicator() {
-	tls.pause(0); //Go back to the start (true is to suppress events)
+	tls.pause(0); //Go back to the start
 	tls.clear();
 }
 
@@ -299,10 +287,8 @@ function inProgress(scope, state) {
 
 	if( state ) {
 		jQuery('#loading', scope).fadeIn(100);
-
 		loading = TweenLite.to(jQuery('#loading i', scope), .3,{rotation: '+45', onComplete: function() {
 			this.restart();
-			console.log('spinning');
 		}})
 	}
 	else if( !state ) {

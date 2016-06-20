@@ -3,26 +3,33 @@ body {
 	font-size: 1em;
 	background-color: rgba(0,0,0,0.8);
 	color: $light;
-
 	background-image: url('../img/bg-1080.jpeg');
 	// background-image: url('../img/background.jpeg');
-
 	background-attachment: fixed;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
-
 	overflow-x: hidden;
-
-
 }
-
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Playfair Display', serif;
 	font-weight: 700;
 }
 .row {
 	max-width: 100%;
+}
+.clearfix {
+	clear: both;
+}
+.row hr {
+	max-width: none !important;
+}
+#wrapper {
+	position: relative;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.3);
+	padding-bottom: 15%;
 }
 a {
 	text-decoration: none;
@@ -37,6 +44,7 @@ a {
 
 	a{
 		border-bottom: 2px solid $lightOpac;
+
 		&:hover {
 			font-size: 1.6rem;
 		}
@@ -51,12 +59,14 @@ a {
 	background-color: rgba(99,99,99,0.3);
 	height: 100vh;
 	position: relative;
+
 	.profile {
 		padding-top: 2rem;
 
 		h1 {
 			margin-top: 5%;
 		}
+
 		.avatar { /* Wordpress added class for img */
 			@include avatar;
 			border: 0.5rem solid rgba(0,0,0,0.25);
@@ -72,6 +82,7 @@ a {
 	cursor: pointer;
 	color: $light;
 	font-size: 3rem;
+	z-index: 1;
 }
 .side-menu-cnt {
 	float: left;
@@ -112,18 +123,6 @@ a {
 		bottom: 2%;
 	}
 }
-.clearfix {
-	clear: both;
-}
-.row hr {
-	max-width: none !important;
-}
-#wrapper {
-	position: relative;
-	top: 0;
-	left: 0;
-	background: rgba(0, 0, 0, 0.3);
-}
 .about {
 	padding-top: 3rem;
 	padding-bottom: 3rem;
@@ -137,6 +136,7 @@ a {
 		opacity: 0;
 	}
 	.charts {
+
 		h4 {
 			opacity: 0;
 			font-family: 'Open Sans', sans-serif;
@@ -164,6 +164,7 @@ a {
 		padding-bottom: 0.5rem;
 
 		.portfolio-item-listing {
+
 			img {
 				width: 100%;
 			}
@@ -221,9 +222,9 @@ a {
 					@include cc;
 					flex-direction: column;
 					color: $light;
-
+					padding-top: 5%;
+					
 					img {
-						// width: 80%;
 						padding: 0.5rem;
 					}
 
@@ -253,28 +254,9 @@ a {
 }
 footer {
 	height: 10vh;
-	background-color: rgba(0,0,0,0.3);
-	margin-top: 65vh;
+	border-top: 1px solid $light;
+	background-color: rgba(0,0,0,0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-
-
-
-
-
-
-/*
-.toggle-img {
-	padding: 0;
-	background-image: url('../img/portrait.jpg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-}
-*/
-
-
-/*
-.content {
-	height: 40vh;
-	background-color: lightsteelblue;
-}*/
