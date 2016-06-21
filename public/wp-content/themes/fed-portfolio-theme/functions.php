@@ -48,6 +48,8 @@ function fed_portfolio_scripts() {
 	// jQuery -->
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('browserDetect', get_template_directory_uri() . '/js/browserCheck.js', array(), false, false);
+	wp_localize_script('browserDetect', 'errorMsg', ['errorUrl' => get_template_directory_uri() . '/error/error.html']);
+
 
 	// Green Sock
 	wp_enqueue_script('tweenLite', '//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenLite.min.js', array(), false, true);
@@ -66,7 +68,8 @@ function fed_portfolio_scripts() {
 	wp_enqueue_script('Fed-Portfolio-Script', get_template_directory_uri() . '/js/scripts.min.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
 	wp_localize_script('Fed-Portfolio-Script', 'ajaxCall', ['ajaxUrl' => get_template_directory_uri() . '/single.php']);
 
-	/* ### Debug ###
+
+	/* ### Debug - Kept here for future development ### 
 	wp_enqueue_script('Debug-Fed-Portfolio-Script', get_template_directory_uri() . '/src/js/build/scripts.js', ['jquery', 'tweenLite', 'CSSPlugin', 'TimelineLite'], false, true);
 	wp_enqueue_script('scroll-magic-debug-plug-in', '//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js', [], false, true);
 	*/
@@ -243,7 +246,6 @@ function add_contact_methods($profile_fields) {
     $profile_fields['github'] = 'Github';
     $profile_fields['twitter'] = 'Twitter Url';
     $profile_fields['facebook'] = 'Facebook URL';
-    $profile_fields['phone'] = 'Phonenumber';
 
     return $profile_fields;
 }

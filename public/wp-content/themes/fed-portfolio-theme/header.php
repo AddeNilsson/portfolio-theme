@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php echo bloginfo('title') //echo get_the_title()?></title>
+		<title><?php echo bloginfo('title'); ?></title>
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<?php wp_head() ?>
+		<?php wp_head(); ?>
 	</head>
 
 	<body>
@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="small-12 column menu">
 				     	<?php
-				     	$args = ['theme_location' => 'primary', 'menu_class' => 'main-menu', 'fallback_cb' => false]; //'items_wrap' => '%3$s'
+				     	$args = ['theme_location' => 'primary', 'menu_class' => 'main-menu', 'fallback_cb' => false];
 							wp_nav_menu($args);
 						?>
 					</div>
@@ -36,16 +36,16 @@
 					?>
 					
 					<div class="small-3 column ">
-						<a href="<?php echo $user_data->github?>"><i class="fa fa-github"></i></a>
+						<a href="<?php echo $user_data->github; ?>"><i class="fa fa-github"></i></a>
 					</div>
 					<div class="small-3 column">
-						<a href="<?php echo $user_data->facebook?>"><i class="fa fa-facebook-square"></i></a>
+						<a href="<?php echo $user_data->facebook; ?>"><i class="fa fa-facebook-square"></i></a>
 					</div>
 					<div class="small-3 column">
-						<a href="<?php echo $user_data->twitter?>"><i class="fa fa-twitter-square"></i></a>
+						<a href="<?php echo $user_data->twitter; ?>"><i class="fa fa-twitter-square"></i></a>
 					</div>
 					<div class="small-3 column">
-						<a href="mailto:<?php echo get_bloginfo('admin_email')?>"><i class="fa fa-envelope"></i></a>
+						<a href="mailto:<?php echo get_bloginfo('admin_email'); ?>"><i class="fa fa-envelope"></i></a>
 					</div>
 				</div>
 			</div>

@@ -8,3 +8,17 @@
 @media screen and(min-width: 64rem) {
 	@import 'desktop';
 }
+
+@media screen and(min-width: 67.6rem) {
+	body {
+		background-image: url('../img/bg_2248.jpeg');
+	}
+}
+
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) { 
+    body {
+		background-image: url('../img/bg.jpeg');
+    }
+}

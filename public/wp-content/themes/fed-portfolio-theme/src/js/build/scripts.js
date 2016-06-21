@@ -107,11 +107,12 @@ var tls = new TimelineLite({onComplete: function() { // scrollarrow timeline
 
 var controller = new ScrollMagic.Controller();
 
+/* Browser compability checked previously. Kept here for future development
 var userAgent = window.navigator.userAgent;
 
 if( userAgent.indexOf('MSIE') > -1 || Object.hasOwnProperty.call(window, "ActiveXObject") && !window.ActiveXObject || !Modernizr.flexbox) {
 	jQuery('body').html('');
-}
+}*/
 
 jQuery(document).ready(function() {
 
